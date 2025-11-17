@@ -6,9 +6,17 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
+import Step3 from "./Step3";
+import ConfirmationModal from "@/app/shared/ConfirmationModal";
 
-export default function Parent() {
+// Define props interface
+interface ParentProps {
+  onLaunchCampaign?: () => void;
+}
+
+export default function Parent({ onLaunchCampaign }: ParentProps) {
   const [currentStep, setCurrentStep] = useState(1); // 1, 2, or 3
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
   const steps = [
     {
@@ -32,6 +40,9 @@ export default function Parent() {
   const handleNext = () => {
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
+    } else {
+      // This is the last step - open confirmation modal
+      setIsConfirmationModalOpen(true);
     }
   };
 
@@ -39,6 +50,19 @@ export default function Parent() {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
     }
+  };
+
+  // Handle launch campaign action
+  const handleLaunchCampaign = () => {
+    setIsConfirmationModalOpen(false);
+  
+    onLaunchCampaign?.(); // Call the prop function if provided
+  };
+
+  // Handle cancel launch
+  const handleCancelLaunch = () => {
+    setIsConfirmationModalOpen(false);
+    // You can add any additional cancel logic here
   };
 
   const getStepState = (stepId: number) => {
@@ -120,12 +144,9 @@ export default function Parent() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="flex justify-center"
+            className=" "
           >
-            <div className="text-center">
-              <h3 className="text-xl font-semibold mb-4">Review & Launch</h3>
-              <p className="text-gray-600">Final check before launching</p>
-            </div>
+            <Step3/>
           </motion.div>
         );
       default:
@@ -194,6 +215,18 @@ export default function Parent() {
           })}
         </div>
       </div>
+
+      {/* Confirmation Modal */}
+      <ConfirmationModal 
+        isOpen={isConfirmationModalOpen}
+        onConfirm={handleLaunchCampaign}
+        onClose={handleCancelLaunch}
+        confirmText="Launch campaign"
+        cancelText="Go back"
+        icon="/images/delete.png"
+        title="Launch this campaign?"
+        message="This campaign will be launched and will not be editable"
+      />
 
       {/* Content Area */}
       <div className=" flex flex-col justify-center max-w-2xl mx-auto w-full">

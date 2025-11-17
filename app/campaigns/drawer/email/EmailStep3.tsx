@@ -8,14 +8,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Dropdown } from "@/app/shared/Dropdown";
-import EmailDrawer from "./email/EmailDrawer";
+// import EmailDrawer from "./email/EmailDrawer";
 
 interface DropdownOption {
   value: string;
   label: string;
 }
-
-
 
 const Step2 = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -31,6 +29,9 @@ const Step2 = () => {
   const [selectedFollowUps, setSelectedFollowUps] = useState("");
   const [selectedFollowUpInterval, setSelectedFollowUpInterval] = useState("");
   const [selectedFrequency, setSelectedFrequency] = useState("");
+
+  // New state to control template section visibility
+  const [showTemplateSection, setShowTemplateSection] = useState(true);
 
   // Refs
   const datePickerRef = useRef<DatePicker | null>(null);
@@ -106,111 +107,68 @@ const Step2 = () => {
     return `${displayHour}:${minutes} ${ampm}`;
   };
 
-  // Dropdown component
-  // const Dropdown = ({ 
-  //   isOpen, 
-  //   onToggle, 
-  //   options, 
-  //   selectedValue, 
-  //   onSelect, 
-  //   placeholder,
-  //   ref 
-  // }: {
-  //   isOpen: boolean;
-  //   onToggle: () => void;
-  //   options: DropdownOption[];
-  //   selectedValue: string;
-  //   onSelect: (value: string) => void;
-  //   placeholder: string;
-  //   ref: React.RefObject<HTMLDivElement>;
-  // }) => {
-  //   const selectedOption = options.find(opt => opt.value === selectedValue);
-
-  //   return (
-  //     <div ref={ref} className="relative">
-  //       <div
-  //         onClick={onToggle}
-  //         className="cursor-pointer"
-  //       >
-  //         <Input
-  //           title={placeholder}
-  //           placeholder={placeholder}
-  //           className="w-full cursor-pointer"
-  //           value={selectedOption?.label || ""}
-  //           readOnly
-  //         />
-  //       </div>
-  //       <Image 
-  //         src='/images/dropdown.svg' 
-  //         alt="Dropdown" 
-  //         width={20} 
-  //         height={20} 
-  //         className="absolute top-4 right-3 pointer-events-none"
-  //       />
-
-  //       {/* Dropdown Menu */}
-  //       {isOpen && (
-  //         <div className="absolute top-full left-0 right-0 bg-white shadow-2xl rounded-lg z-10 mt-1 border border-gray-100">
-  //           {options.map((option) => (
-  //             <div
-  //               key={option.value}
-  //               onClick={() => {
-  //                 onSelect(option.value);
-  //                 onToggle();
-  //               }}
-  //               className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors duration-150 first:rounded-t-lg last:rounded-b-lg"
-  //             >
-  //               <span className="text-sm text-gray-900">{option.label}</span>
-  //             </div>
-  //           ))}
-  //         </div>
-  //       )}
-  //     </div>
-  //   );
-  // };
+  const handleCancelTemplate = () => {
+    setShowTemplateSection(false);
+  };
 
   return (
-    <div className="space-y-8 pt-8">
-      <div className="space-y-6">
-        <h1 className="font-medium body-3 text-[#111827]">Email setup</h1>
-        <div>
-          <div
-            onClick={() => setIsDrawerOpen(true)}
-            className="flex items-center cursor-pointer gap-3 p-3 bg-[#FEEFE4] border border-transparent hover:border-[#f8a86f] rounded-lg shadow-[0_0_0_1px_rgba(255,255,255,0.10) inset]"
+    <div className="space-y-8">
+        <div className="space-y-1">
+            <p className="body-1 font-medium text-[#111827]">Add new campaign</p>
+            <p className="heading-6 font-regular text-[#70747D]">Create and launch a new campaign to reach your leads with personalized AI-powered emails.</p>
+        </div>
+      
+      {/* Template Section with AnimatePresence for smooth disappearance */}
+      <AnimatePresence>
+        {showTemplateSection && (
+          <motion.div
+            initial={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-6 overflow-hidden"
           >
-            <Image
-              src="/images/select-template.svg"
-              width={48}
-              height={48}
-              alt="check"
-            />
-            <div className="flex justify-between w-full items-center">
-              <div className="space-y-1">
-                <h2 className="heading-5 text-[#111827]">Select template</h2>
-                <p className="body-4 text-[#70747D]">
-                  Choose from your saved email templates to get started quickly.
-                </p>
-              </div>
-              <div className="cursor-pointer">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M5 12H19M19 12L12 5M19 12L12 19"
-                    stroke="#F87B1B"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+            <div className="flex w-full justify-between">
+              <h1 className="font-medium body-3 text-[#111827]">Email setup</h1>
+              <p className="heading-6 font-regular text-[#F87B1B] underline cursor-pointer">Replace template</p>
+            </div>
+            <div className="relative">
+              <div
+                className="flex items-center cursor-pointer gap-3 p-3 bg-[#ECFDF2] border border-transparent hover:border-[#f8a86f] rounded-lg shadow-[0_0_0_1px_rgba(255,255,255,0.10) inset]"
+              >
+                <div className="bg-white custom-shadow rounded-lg p-3">
+                  <Image
+                    src="/images/template.svg"
+                    width={24}
+                    height={24}
+                    alt="check"
                   />
-                </svg>
+                </div>
+                <div className="flex justify-between w-full items-start">
+                  <div className="space-y-1">
+                    <h2 className="heading-5 text-[#111827]">Welcome email</h2>
+                    <p className="body-4 text-[#70747D] max-w-[420px]">
+                      You are completely free to keep this template as your email template or cancel this template and select a new one.
+                    </p>
+                  </div>
+                  <Image src='/images/file-search.svg' alt="Search file" width={24} height={24} />
+                </div>
+                {/* Cancel Button */}
+                <button 
+                  onClick={handleCancelTemplate}
+                  className="absolute -right-1 -top-3 p-1 cursor-pointer rounded-full z-9999 transition-colors"
+                >
+                  <Image 
+                    src='/images/cancel.svg' 
+                    alt="Cancel" 
+                    height={23} 
+                    width={23} 
+                  />
+                </button>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="space-y-6">
         <h1 className="font-medium body-3 text-[#111827]">Schedule</h1>
@@ -250,7 +208,6 @@ const Step2 = () => {
           {/* Time Picker */}
           <div onClick={() => timeInputRef.current?.showPicker()} className="relative">
             <div
-              
               className="cursor-pointer"
             >
               <Input
@@ -311,32 +268,6 @@ const Step2 = () => {
           ref={frequencyRef}
         />
       </div>
-
-      <AnimatePresence>
-        {isDrawerOpen && (
-          <>
-            {/* Overlay */}
-            <motion.div
-              className="fixed inset-0 bg-black/40 h-[100vh] z-50"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsDrawerOpen(false)}
-            />
-
-            {/* Drawer */}
-            <motion.div
-              className="fixed top-0 right-0 w-[91vw] md:w-[40vw] h-[100vh] overflow-auto hide-scrollbar sm:w-[580px] bg-white z-50 rounded-l-lg  p-5"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 100, damping: 20 }}
-            >
-             <EmailDrawer onSendEmail={()=>setIsDrawerOpen(false)}/>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
     </div>
   );
 };
