@@ -9,10 +9,15 @@ export interface BottomAction {
   onClick: (selectedRows: Record<string, unknown>[]) => void;
   className?: string;
 }
-interface TableData {
-  [key: string]: string | number; // Allow both string and number values
-}
 
+interface TableData {
+  id: number | string;
+  [key: string]: string | number | boolean | undefined;
+}
+interface SharedTableProps {
+  columns: Column[];
+  data: Record<string, unknown>[];
+}
 export type Column = {
   key: string;
   label: string;
@@ -123,6 +128,12 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
         return "text-[#11224E]";
       case "opened":
         return "text-[#0CD767]";
+         case "active":
+        return "text-[#0CD767]";
+         case "inactive":
+        return "text-[#E28413]";
+         case "expired":
+        return "text-[#EA3232]";
       default:
         return "text-[#11224E] ";
     }
@@ -233,7 +244,7 @@ const SharedTable: React.FC<SharedTableProps> = ({
         return (
           <a
             href={col.linkUrlKey ? row[col.linkUrlKey] : "#"}
-            className="text-blue-600 hover:underline flex items-center gap-2"
+            className="underline flex items-center gap-2"
           >
             {row[`${col.key}_image`] && (
               <img

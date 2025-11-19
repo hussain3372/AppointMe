@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -12,7 +12,9 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ onMenuClick, isMobile }) => {
   const pathname = usePathname();
 
-  // Extract the last part of the route and format it nicely
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+
   const currentRoute =
     pathname === "/"
       ? "Dashboard"
@@ -22,6 +24,21 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, isMobile }) => {
           .slice(-1)[0]
           .replace(/-/g, " ")
           .replace(/\b\w/g, (char) => char.toUpperCase());
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setIsNotificationOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <div className="w-full">
@@ -65,7 +82,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, isMobile }) => {
           </div>
 
           {/* Mobile */}
-          <div className="flex items-center gap-4 xl:hidden">
+          <div className="flex items-center gap-4 max-[1280px]:flex min-[1281px]:hidden">
             <button
               onClick={onMenuClick}
               className="cursor-pointer"
@@ -124,14 +141,17 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, isMobile }) => {
         </div>
 
         <div className="flex items-center gap-3">
-          <Link href="/notifications">
+          <button
+            onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+            className={`p-1 rounded-lg transition cursor-pointer`}
+          >
             <Image
               src="/images/notification-icon.svg"
               alt="notifications"
               width={40}
               height={40}
             />
-          </Link>
+          </button>
           <Link href="/profile">
             <Image
               src="/images/profile.svg"
@@ -141,6 +161,159 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, isMobile }) => {
             />
           </Link>
         </div>
+
+        {isNotificationOpen && (
+          <div
+            ref={dropdownRef}
+            className="absolute right-0 sm:right-5 top-[76px] max-w-[493px] w-full min-h-[560px] h-full overflow-auto"
+          >
+            <div className="rounded-xl bg-white border border-[#ECEDEE] shadow-[0_4px_8px_0_rgba(0,0,0,0.08)] p-5 space-y-3">
+              <div className="flex items-center justify-between">
+                <h1>Notifications</h1>
+                <button
+                  className="cursor-pointer"
+                  onClick={() => setIsNotificationOpen(false)}
+                >
+                  <Image
+                    src="/images/cross-notification.svg"
+                    width={32}
+                    height={32}
+                    alt="cross-notification"
+                  />
+                </button>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <ul className="flex items-center gap-5">
+                    <li className="text-[#00000066] body-4 font-medium">All</li>
+                    <li className="text-[#00000066] body-4 font-medium">
+                      Read
+                    </li>
+                    <li className="text-[#00000066] body-4 font-medium">
+                      Unread
+                    </li>
+                  </ul>
+                  <div className="flex items-center gap-1">
+                    <input type="checkbox" />
+                    <p className="text-[#00000066] body-4 font-medium">
+                      Mark all as read
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="border-b border-[#E2E3E5] pb-4">
+                    <div className="p-2 bg-[#F4F4F4] rounded-lg flex items-start justify-between">
+                      <div className="flex items-start gap-3">
+                        <div className="rounded-lg shadow-[0_4px_8px_0_rgba(0,0,0,0.08)] bg-white p-1.5">
+                          <Image
+                            src="/images/rocket-yellow.png"
+                            width={20}
+                            height={20}
+                            alt="rocket-yellow"
+                          />
+                        </div>
+                        <div className="space-y-1 max-w-[258px]">
+                          <h1 className="text-[#000000CC] body-3">
+                            Campaign sent
+                          </h1>
+                          <p className="text-[#00000066] body-4">
+                            Your campaign Product Launch was sent successfully.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <p className="text-[#000000CC] body-4">10m</p>
+                        <div className="w-2 h-2 rounded-full bg-[#F87B1B]"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border-b border-[#E2E3E5] pb-4">
+                    <div className="p-2 bg-[#F4F4F4] rounded-lg flex items-start justify-between">
+                      <div className="flex items-start gap-3">
+                        <div className="rounded-lg shadow-[0_4px_8px_0_rgba(0,0,0,0.08)] bg-white p-1.5">
+                          <Image
+                            src="/images/rocket-yellow.png"
+                            width={20}
+                            height={20}
+                            alt="rocket-yellow"
+                          />
+                        </div>
+                        <div className="space-y-1 max-w-[258px]">
+                          <h1 className="text-[#000000CC] body-3">
+                            Campaign sent
+                          </h1>
+                          <p className="text-[#00000066] body-4">
+                            Your campaign Product Launch was sent successfully.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <p className="text-[#000000CC] body-4">10m</p>
+                        <div className="w-2 h-2 rounded-full bg-[#F87B1B]"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border-b border-[#E2E3E5] pb-4">
+                    <div className="p-2 bg-[#F4F4F4] rounded-lg flex items-start justify-between">
+                      <div className="flex items-start gap-3">
+                        <div className="rounded-lg shadow-[0_4px_8px_0_rgba(0,0,0,0.08)] bg-white p-1.5">
+                          <Image
+                            src="/images/rocket-yellow.png"
+                            width={20}
+                            height={20}
+                            alt="rocket-yellow"
+                          />
+                        </div>
+                        <div className="space-y-1 max-w-[258px]">
+                          <h1 className="text-[#000000CC] body-3">
+                            Campaign sent
+                          </h1>
+                          <p className="text-[#00000066] body-4">
+                            Your campaign Product Launch was sent successfully.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <p className="text-[#000000CC] body-4">10m</p>
+                        <div className="w-2 h-2 rounded-full bg-[#F87B1B]"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border-b border-[#E2E3E5] pb-4">
+                    <div className="p-2 bg-[#F4F4F4] rounded-lg flex items-start justify-between">
+                      <div className="flex items-start gap-3">
+                        <div className="rounded-lg shadow-[0_4px_8px_0_rgba(0,0,0,0.08)] bg-white p-1.5">
+                          <Image
+                            src="/images/rocket-yellow.png"
+                            width={20}
+                            height={20}
+                            alt="rocket-yellow"
+                          />
+                        </div>
+                        <div className="space-y-1 max-w-[258px]">
+                          <h1 className="text-[#000000CC] body-3">
+                            Campaign sent
+                          </h1>
+                          <p className="text-[#00000066] body-4">
+                            Your campaign Product Launch was sent successfully.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <p className="text-[#000000CC] body-4">10m</p>
+                        <div className="w-2 h-2 rounded-full bg-[#F87B1B]"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

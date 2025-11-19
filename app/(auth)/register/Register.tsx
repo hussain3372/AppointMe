@@ -56,7 +56,7 @@ const Register: React.FC = () => {
     
     if (validateForm()) {
       // Here you can add your registration API call logic
-      router.push("/login");
+      router.push("/onboarding");
     }
   };
 

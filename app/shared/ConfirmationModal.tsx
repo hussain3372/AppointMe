@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
+import ReactDOM from "react-dom";
 import PrimaryBtn from "../ui/buttons/PrimaryBtn";
 import Image from "next/image";
+import Input from "../ui/Input"; // Import your custom Input component
+
+interface PaymentRecord {
+  label: string;
+  value: string;
+  bgColor?: string;
+}
 
 interface ConfirmationModalProps {
   isOpen: boolean;
@@ -12,6 +20,21 @@ interface ConfirmationModalProps {
   cancelText?: string;
   icon?: React.ReactNode;
   type?: "danger" | "warning" | "info";
+  // New props
+  showInput?: boolean;
+  inputPlaceholder?: string;
+  inputLabel?: string;
+  inputType?: "text" | "password" | "email" | "number";
+  inputAs?: "input" | "select";
+  inputOptions?: string[];
+  paymentRecords?: PaymentRecord[];
+  highlightText?: string;
+  // Input props
+  inputValue?: string;
+  onInputChange?: (value: string) => void;
+  inputDisabled?: boolean;
+  // Close on overlay click
+  closeOnOverlayClick?: boolean;
 }
 
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
@@ -23,18 +46,104 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   confirmText = "Confirm",
   cancelText = "Go back",
   icon,
+  showInput = false,
+  inputPlaceholder = "Enter details",
+  inputLabel = "Card details",
+  inputType = "text",
+  inputAs = "input",
+  inputOptions = [],
+  paymentRecords = [],
+  highlightText,
+  // Input props
+  inputValue = "",
+  onInputChange,
+  inputDisabled = false,
+  closeOnOverlayClick = true, // Default to true
 }) => {
+  const [localInputValue, setLocalInputValue] = useState(inputValue);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Handle input changes
+  const handleInputChange = (value: string) => {
+    setLocalInputValue(value);
+    onInputChange?.(value);
+  };
+
+  // Handle overlay click
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!closeOnOverlayClick) return;
+    
+    // Check if click is on the overlay (not the modal content)
+    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+      onClose();
+    }
+  };
+
+  // Handle ESC key press
+  useEffect(() => {
+    const handleEscapeKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscapeKey);
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-xl max-w-md w-full p-5 relative animate-fadeIn">
-        {/* Icon */}
+  // Function to highlight specific text in message
+  const renderMessage = () => {
+    if (!highlightText) return message;
+    
+    const parts = message.split(highlightText);
+    return (
+      <>
+        {parts.map((part, index) => (
+          <React.Fragment key={index}>
+            {part}
+            {index < parts.length - 1 && (
+              <span className="text-[#F87B1B]  heading-7 font-normal">{highlightText}</span>
+            )}
+          </React.Fragment>
+        ))}
+      </>
+    );
+  };
 
+  // Create base input props
+  const baseInputProps = {
+    title: inputLabel,
+    placeholder: inputPlaceholder,
+    value: localInputValue,
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => 
+      handleInputChange(e.target.value),
+    disabled: inputDisabled,
+    className: "w-full",
+  };
+
+  return ReactDOM.createPortal(
+    <div 
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm"
+      onClick={handleOverlayClick}
+    >
+      <div 
+        ref={modalRef}
+        className="bg-white rounded-xl max-w-md w-full p-5 relative animate-fadeIn"
+        onClick={(e) => e.stopPropagation()} // Prevent click from bubbling to overlay
+      >
+        {/* Icon */}
         <div className="flex items-center justify-center mb-5">
-          {icon && (
-            <Image src={`${icon}`} width={140} height={140} alt="icon" />
-          )}
+          {icon && <Image src={`${icon}`} width={140} height={140} alt="icon" />}
         </div>
 
         {/* Title */}
@@ -43,20 +152,61 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         </h2>
 
         {/* Message */}
-        <p className="text-sm text-[#6B7280] text-center mb-10 leading-relaxed">
-          {message}
+        <p className="text-sm text-[#6B7280] text-center mb-6 leading-relaxed">
+          {renderMessage()}
         </p>
+
+        {/* Payment Records */}
+        {paymentRecords.length > 0 && (
+          <div className="mb-5 space-y-3">
+            {paymentRecords.map((record, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-between px-4 py-3 rounded-lg"
+                style={{ backgroundColor: record.bgColor || "#FEE5D1" }}
+              >
+                <span className="heading-7 font-medium text-[#11224E]">
+                  {record.label}
+                </span>
+                <span className="heading-7 font-medium text-[#111827]">
+                  {record.value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Input Field - UPDATED with proper conditional props */}
+        {showInput && (
+          <div className="mb-6">
+            {inputAs === "select" ? (
+              <Input
+                as="select"
+                options={inputOptions}
+                {...baseInputProps}
+              />
+            ) : (
+              <Input
+                as="input"
+                type={inputType}
+                {...baseInputProps}
+              />
+            )}
+          </div>
+        )}
 
         {/* Action Buttons */}
         <div className="flex gap-3">
-          <PrimaryBtn
-            variant="soft"
-            label={cancelText}
-            width="100%"
-            imageSrc="/images/back-arrow.svg"
-            imagePosition="left"
-            onClick={onClose}
-          />
+          {cancelText && (
+            <PrimaryBtn
+              variant="soft"
+              label={cancelText}
+              width="100%"
+              imageSrc="/images/back-arrow.svg"
+              imagePosition="left"
+              onClick={onClose}
+            />
+          )}
           <PrimaryBtn
             variant="filled"
             label={confirmText}
@@ -86,7 +236,8 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
           animation: fadeIn 0.2s ease-out;
         }
       `}</style>
-    </div>
+    </div>,
+    document.body
   );
 };
 

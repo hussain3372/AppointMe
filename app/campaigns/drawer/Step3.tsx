@@ -14,7 +14,7 @@ export default function Step3() {
       id: 1,
       value: "June 12, 2025",
       title: "Start date",
-      img: "/images/calender.svg"
+      img: "/images/calender-colored.svg"
     },
     {
       id: 2,

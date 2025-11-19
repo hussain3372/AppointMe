@@ -15,9 +15,21 @@ interface TabContent {
 
 const tabContents: TabContent[] = [
   { label: "Campaigns", component: <Campaigns />, icon: "/images/rocket1.png" },
-  { label: "Emails send", component: <EmailTable setIsDrawerOpen={()=>console.log('opened')}/>, icon: "/images/mail-plus.png" },
-  { label: "Leads", component: <LeadsTable setIsDrawerOpen={()=>console.log('opened')}/>, icon: "/images/users.png" },
-  { label: "Meetings", component: <Meetings />, icon: "/images/calendar-arrow-down.png" },
+  {
+    label: "Emails send",
+    component: <EmailTable setIsDrawerOpen={() => console.log("opened")} />,
+    icon: "/images/mail-plus.png",
+  },
+  {
+    label: "Leads",
+    component: <LeadsTable setIsDrawerOpen={() => console.log("opened")} />,
+    icon: "/images/users.png",
+  },
+  {
+    label: "Meetings",
+    component: <Meetings />,
+    icon: "/images/calendar-arrow-down.png",
+  },
 ];
 
 const ActivityFeed: React.FC = () => {
@@ -34,7 +46,11 @@ const ActivityFeed: React.FC = () => {
         </div>
 
         <div className="flex items-center w-full sm:w-auto">
-          <Tabs tabs={tabContents} activeTab={activeTab} setActiveTab={setActiveTab} />
+          <Tabs
+            tabs={tabContents}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         </div>
       </div>
 

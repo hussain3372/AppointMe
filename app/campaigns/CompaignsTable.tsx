@@ -18,7 +18,8 @@ const CompaignsTable = ({
     {
       key: "compaignName",
       label: "Campaign name",
-      type: "text",
+      type: "link",
+      linkUrlKey: "compaignName_link",
     },
     { key: "leadsReached", label: "Leads Reached", type: "text" },
     {
@@ -43,6 +44,7 @@ const CompaignsTable = ({
       lastUpdated: "Aug 12, 2025",
       status: "Completed",
       actions: "",
+      compaignName_link: "/campaigns/1",
     },
     {
       id: 2,
@@ -55,6 +57,7 @@ const CompaignsTable = ({
       lastUpdated: "Aug 12, 2025",
       status: "Ongoing",
       actions: "",
+      compaignName_link: "/campaigns/1",
     },
     {
       id: 3,
@@ -67,6 +70,7 @@ const CompaignsTable = ({
       lastUpdated: "Aug 12, 2025",
       status: "Completed",
       actions: "",
+      compaignName_link: "/campaigns/1",
     },
     {
       id: 4,
@@ -79,6 +83,7 @@ const CompaignsTable = ({
       lastUpdated: "Aug 12, 2025",
       status: "Scheduled",
       actions: "",
+      compaignName_link: "/campaigns/1",
     },
     {
       id: 5,
@@ -91,6 +96,7 @@ const CompaignsTable = ({
 
       status: "Completed",
       actions: "",
+      compaignName_link: "/campaigns/1",
     },
     {
       id: 6,
@@ -103,6 +109,7 @@ const CompaignsTable = ({
       replyRate_image: "/images/graph-red.png",
 
       actions: "",
+      compaignName_link: "/campaigns/1",
     },
     {
       id: 7,
@@ -115,6 +122,7 @@ const CompaignsTable = ({
       replyRate_image: "/images/graph-green.png",
 
       actions: "",
+      compaignName_link: "/campaigns/1",
     },
   ];
 
@@ -207,7 +215,7 @@ const CompaignsTable = ({
           title="Campaigns"
           filters={filters}
           searchable={false}
-          filterable={true} 
+          filterable={true}
           selectable={true}
           onSelect={handleSelect}
           bottomActions={[

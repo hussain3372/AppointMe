@@ -2,17 +2,51 @@
 
 import { SessionProvider } from "next-auth/react";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
+import Drawer from "./components/HelpDrawer";
+import { useRef } from "react"; // add this
 
 interface ClientLayoutProps {
   children: React.ReactNode;
 }
 
 const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
+  const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [minimized, setMinimized] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const drawerRef = useRef<HTMLDivElement | null>(null);
+
+  // Check if current route is an auth route
+  const isAuthRoute =
+    pathname?.startsWith("/login") ||
+    pathname?.startsWith("/register") ||
+    pathname?.startsWith("/forgot-password") ||
+    pathname?.startsWith("/new-password") ||
+    pathname?.startsWith("/otp")||
+    pathname?.startsWith("/onboarding");
+    
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (!drawerRef.current) return;
+
+      // If drawer is open AND click is outside
+      if (isDrawerOpen && !drawerRef.current.contains(e.target as Node)) {
+        // Add a small delay for smooth transition (same as drawer animation)
+        setTimeout(() => {
+          setIsDrawerOpen(false);
+        }, 10);
+      }
+    }
+
+    window.addEventListener("mousedown", handleClickOutside);
+    return () => window.removeEventListener("mousedown", handleClickOutside);
+  }, [isDrawerOpen]);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 1280px)");
@@ -36,6 +70,12 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
     return "ml-[260px]";
   };
 
+  // If it's an auth route, return children without sidebar/header
+  if (isAuthRoute) {
+    return <SessionProvider>{children}</SessionProvider>;
+  }
+
+  // Otherwise, render with Sidebar and Header
   return (
     <SessionProvider>
       <div className="flex relative min-h-screen">
@@ -60,8 +100,10 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
           }`}
         >
           <Sidebar
+            setIsDrawerOpen={setIsDrawerOpen}
             onClose={toggleSidebar}
             isMobile={isMobile}
+            isDrawerOpen={isDrawerOpen}
             minimized={minimized}
             onMinimize={handleMinimize}
           />
@@ -87,9 +129,15 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
           </div>
 
           {/* Content with top padding to account for fixed header */}
-          <div className="w-full px-2 sm:px-5 pt-[85px] ">{children}</div>
+          <div className="w-full px-2 sm:px-5 pt-[85px]">{children}</div>
         </div>
       </div>
+
+      <Drawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        drawerRef={drawerRef}
+      />
     </SessionProvider>
   );
 };

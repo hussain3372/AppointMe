@@ -27,3 +27,16 @@ body {
 .react-datepicker-wrapper{
   position: absolute !important;
 }
+
+
+
+/* Ensure select dropdowns are not clipped */
+select {
+  position: relative;
+  z-index: 20;
+}
+
+/* Override any parent overflow constraints for select containers */
+.relative > select {
+  position: static;
+}

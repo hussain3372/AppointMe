@@ -11,24 +11,24 @@ const Login: React.FC = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
   const [errors, setErrors] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     // Clear error when user starts typing
     if (errors[name as keyof typeof errors]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
@@ -36,7 +36,7 @@ const Login: React.FC = () => {
   const validateForm = () => {
     const newErrors = {
       email: "",
-      password: ""
+      password: "",
     };
 
     if (!formData.email.trim()) {
@@ -53,7 +53,7 @@ const Login: React.FC = () => {
 
   const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    
+
     if (validateForm()) {
       // Here you can add your login API call logic
       router.push("/dashboard");
@@ -109,7 +109,9 @@ const Login: React.FC = () => {
                 onChange={handleInputChange}
               />
               {errors.password && (
-                <span className="text-red-500 text-sm mt-1">{errors.password}</span>
+                <span className="text-red-500 text-sm mt-1">
+                  {errors.password}
+                </span>
               )}
             </div>
             <div className="flex items-center justify-end mt-3">

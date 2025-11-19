@@ -1,8 +1,10 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import React, { Activity, useEffect, useRef, useState } from "react";
 import NavLink from "./NavLink";
+import { usePathname } from "next/navigation";
+import ConfirmationModal from "../shared/ConfirmationModal";
+import { useRouter } from "next/navigation";
 
 interface SidebarProps {
   onClose?: () => void;
@@ -10,6 +12,8 @@ interface SidebarProps {
   // optional controlled minimize props to support layout-level control
   minimized?: boolean;
   onMinimize?: () => void;
+  setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isDrawerOpen: boolean;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -17,14 +21,20 @@ const Sidebar: React.FC<SidebarProps> = ({
   isMobile,
   minimized: minimizedProp,
   onMinimize,
+  setIsDrawerOpen,
+  isDrawerOpen,
 }) => {
   const [openDropdowns, setOpenDropdowns] = useState<string[]>([
     "essential",
     "engage",
   ]);
   const [minimizedState, setMinimized] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
   const minimized =
     typeof minimizedProp === "boolean" ? minimizedProp : minimizedState;
+  const router = useRouter();
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 641px) and (max-width: 1023px)");
@@ -60,27 +70,41 @@ const Sidebar: React.FC<SidebarProps> = ({
     setMinimized((s) => !s);
   };
 
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSearchClick = () => {
-  if (isMobile && onClose) {
-    onClose();
-    // Use setTimeout to ensure the component has re-rendered and input is available
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 0);
-    return;
-  }
+    if (isMobile && onClose) {
+      onClose();
+      // Use setTimeout to ensure the component has re-rendered and input is available
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 0);
+      return;
+    }
 
-  // If parent provided an onMinimize handler, call it (controlled behavior)
-  if (onMinimize) {
-    onMinimize();
-    return;
-  }
+    // If parent provided an onMinimize handler, call it (controlled behavior)
+    if (onMinimize) {
+      onMinimize();
+      return;
+    }
 
-  // otherwise toggle internal minimized state
-  setMinimized((s) => !s);
-};
+    // otherwise toggle internal minimized state
+    setMinimized((s) => !s);
+  };
+  const confirmLogout = () => {
+    console.log("User logged out!");
+
+    // Clear any auth tokens if needed, e.g. localStorage.removeItem("token");
+
+    setIsLogoutModalOpen(false);
+
+    // Redirect to login page
+    router.push("/login");
+  };
+
+  const pathname = usePathname();
+
+  const isActive = pathname;
 
   return (
     <>
@@ -137,7 +161,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   }  top-2 z-20`}
                 />
                 <input
-                ref={inputRef}
+                  ref={inputRef}
                   type="text"
                   placeholder="Search..."
                   className={`py-2 pl-4 pr-8 flex items-center outline-none rounded-full bg-[#FFFFFF99] shadow-[0_6px_8px_0_rgba(0,0,0,0.12)] backdrop-blur-[20px] text-[14px] font-normal leading-5 ${
@@ -428,7 +452,14 @@ const Sidebar: React.FC<SidebarProps> = ({
                 </svg>
                 <span className={minimized ? "hidden" : ""}>Setting</span>
               </NavLink>
-              <NavLink href="/help-and-support" minimized={minimized}>
+              <button
+                className={
+                  "text-[14px] py-2 px-3 rounded-full flex items-center gap-2 text-[#111827] hover:text-[#FFFFFF] hover:bg-[#11224E] bg-transparent transition " +
+                  (minimized ? "justify-center px-1" : "") +
+                  (isDrawerOpen ? " bg-[#11224E]! text-[#FFFFFF]!" : "")
+                }
+                onClick={() => setIsDrawerOpen(true)}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -446,11 +477,50 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <span className={minimized ? "hidden" : ""}>
                   Help & support
                 </span>
-              </NavLink>
+              </button>
+              <button
+                onClick={() => setIsLogoutModalOpen(true)}
+                className={
+                  "text-[14px] py-2 px-3 rounded-full flex items-center gap-2 text-[#111827] hover:text-[#FFFFFF] hover:bg-[#11224E] bg-transparent transition " +
+                  (minimized ? "justify-center px-1" : "") +
+                  (isLogoutModalOpen ? " bg-[#11224E]! text-[#FFFFFF]!" : "") // ✅ active state
+                }
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M7.5 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H7.5M13.3333 14.1667L17.5 10M17.5 10L13.3333 5.83333M17.5 10H7.5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+
+                <span className={minimized ? "hidden" : ""}>Logout</span>
+              </button>
             </div>
           </div>
         </div>
       </div>
+
+      {isLogoutModalOpen && (
+        <ConfirmationModal
+          isOpen={isLogoutModalOpen}
+          onClose={() => setIsLogoutModalOpen(false)}
+          onConfirm={confirmLogout}
+          title="Are you sure you want to logout?"
+          message="You'll be signed out of your account and need to log in again to continue."
+          icon="/images/logout.svg"
+          confirmText="Logout"
+          cancelText="Go back"
+        />
+      )}
     </>
   );
 };

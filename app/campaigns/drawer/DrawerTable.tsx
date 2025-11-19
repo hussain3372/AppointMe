@@ -445,10 +445,10 @@ const DrawerTable = ({
           selectable={true}
           onSelect={handleSelect}
           bottomActions={[
-            {
-              label: "Add to campaign",
-              onClick: handleAddToCampaign,
-            },
+            // {
+            //   label: "Add to campaign",
+            //   onClick: handleAddToCampaign,
+            // },
             {
               label: "Delete leads",
               onClick: handleDeleteLeads,

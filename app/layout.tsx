@@ -3,7 +3,6 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 import "./ui/typography.css";
 import ClientLayout from "./ClientLayout";
-import { SessionProvider } from "next-auth/react"; 
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -25,7 +24,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${manrope.className} antialiased`}>
         <ClientLayout>{children}</ClientLayout>
-        {/* {children} */}
       </body>
     </html>
   );
