@@ -480,12 +480,12 @@ dateSent:"June 12, 2025",
         onConfirm={confirmDeleteEmail}
         title={
           selectedEmailToDelete.length === 1
-            ? "Delete this lead?"
-            : `Delete ${selectedEmailToDelete.length} Email?`
+            ? "Delete this Email?"
+            : `Delete ${selectedEmailToDelete.length} Emails?`
         }
         message={getDeleteMessage()}
         icon="/images/bin.svg"
-        confirmText="Delete lead"
+        confirmText="Delete Email"
         cancelText="Go back"
       />
     </>

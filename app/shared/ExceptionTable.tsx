@@ -292,7 +292,7 @@ const ExceptionTable: React.FC<ExceptionTableProps> = ({
         </div>
       </div>
 
-      <div className="overflow-x-auto hide-scrollbar">
+      <div className="overflow-x-auto ">
         <table className="min-w-full border-collapse ">
           <thead>
             <tr className="bg-[#F2F2F2] rounded-lg text-left text-[12px] text-[#111827] uppercase">

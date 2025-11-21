@@ -97,11 +97,9 @@ export default function Stats() {
         </div>
         <div className="flex items-center gap-2 justify-center">
             <div className="bg-white custom-shadow p-2 rounded-lg border border-[#F6F6F6] cursor-pointer">
-              <Image src='/images/mail-plus-black.svg' alt='mail' height={16} width={16}/>
+              <Image src='/images/mail-recycle.svg' alt='mail' height={16} width={16}/>
             </div>
-            <div className="bg-white custom-shadow p-2 rounded-lg border border-[#F6F6F6] cursor-pointer">
-              <Image src='/images/edit.svg' alt='edit' height={16} width={16}/>
-            </div>
+            
             <div 
               className="bg-white custom-shadow p-2 rounded-lg border border-[#F6F6F6] cursor-pointer"
               onClick={handleDeleteClick}
@@ -131,6 +129,7 @@ export default function Stats() {
       <ConfirmationModal 
         onClose={handleCloseModal} 
         title='Do you want to delete this campaign'
+        message='This campaign wil be deleted permanently'
         icon='/images/delete.png'
         cancelText='Cancel'
         onConfirm={handleConfirmDelete} 

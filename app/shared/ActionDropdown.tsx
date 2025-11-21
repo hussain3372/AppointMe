@@ -124,7 +124,7 @@ useEffect(() => {
         createPortal(
           <div
             ref={dropdownRef}
-            className="absolute z-[9999999999999] bg-white shadow-2xl rounded-lg w-28"
+            className="absolute z-[99] bg-white shadow-2xl rounded-lg w-28"
             style={{
               top: `${position.top}px`,
               left: `${position.left}px`,

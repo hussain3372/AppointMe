@@ -16,7 +16,24 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
   onChange,
 }) => {
   const [open, setOpen] = useState(false);
+  const [alignRight, setAlignRight] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Calculate position when opening
+  useEffect(() => {
+    if (open && buttonRef.current) {
+      const buttonRect = buttonRef.current.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      
+      // Check if dropdown would overflow on the right
+      const dropdownWidth = 190;
+      const spaceOnRight = viewportWidth - buttonRect.left;
+      
+      // If not enough space on right, align to right edge
+      setAlignRight(spaceOnRight < dropdownWidth);
+    }
+  }, [open]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -35,6 +52,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
   return (
     <div className="relative" ref={dropdownRef}>
       <button
+        ref={buttonRef}
         onClick={() => setOpen((prev) => !prev)}
         className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-[#F6F6F6] text-[#70747D] text-[12px] font-normal hover:bg-[#e2dddd] focus:outline-none focus:ring-2 focus:ring-orange-500"
       >
@@ -48,7 +66,9 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
       </button>
 
       {open && (
-        <div className="absolute left-0 top-full mt-2 w-full  rounded-xl bg-[#FFFFFF99] shadow-2xl z-50">
+        <div className={`absolute top-full mt-2 w-[180px] rounded-xl bg-white border border-gray-200 shadow-lg z-50 ${
+          alignRight ? 'right-0' : 'left-0'
+        }`}>
           <ul className="max-h-56 overflow-y-auto">
             {options.map((opt) => (
               <li
@@ -57,7 +77,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
                   onChange(opt);
                   setOpen(false);
                 }}
-                className={`px-4 py-2.5 cursor-pointer text-[#222222] body-4 font-medium flex items-center gap-2.5 tracking-[0.42px] bg-white rounded-lg hover:bg-orange-50 hover:text-orange-600 transition ${
+                className={`px-4 py-2.5 cursor-pointer text-[#222222] text-sm font-medium hover:bg-orange-50 hover:text-orange-600 transition ${
                   value === opt
                     ? "bg-orange-100 text-orange-600 font-medium"
                     : ""
