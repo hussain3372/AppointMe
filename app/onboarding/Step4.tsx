@@ -23,13 +23,8 @@ export default function Step4() {
   ]
 
   return (
-    <motion.div
-      initial={{ x: "100vw", opacity: 0, scale: 0.98 }}   // start fully right
-      animate={{ x: 0, opacity: 1, scale: 1 }}             // smooth arrival
-      transition={{
-        duration: 2.6,                                     
-        ease: [0.12, 1, 0.32, 1],                          
-      }}
+    <div
+      
       className='space-y-10 pb-[60px]'
     >
       <div className='space-y-3 text-center'>
@@ -44,15 +39,9 @@ export default function Step4() {
       {/* 👉 Cards with staggered animation */}
       <div className="grid sm:grid-cols-2 gap-3">
         {process.map((item, index) => (
-          <motion.div
+          <div
             key={item.id}
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              duration: 1.2,
-              ease: [0.25, 1, 0.5, 1],
-              delay: index * 0.2, 
-            }}
+            
             className='bg-[#F2F2F2] rounded-lg space-y-5 p-4'
           >
             <div className="flex justify-between items-center">
@@ -66,7 +55,7 @@ export default function Step4() {
               <p className="heading-5 font-medium text-[#111827]">{item.title}</p>
               <p className="heading-6 font-regular text-[#70747D] max-w-[282px]">{item.disc}</p>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
@@ -83,6 +72,6 @@ export default function Step4() {
           <Input title='Password' placeholder='Enter password' type='password' className='w-full' />
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }

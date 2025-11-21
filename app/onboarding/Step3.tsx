@@ -27,13 +27,8 @@ export default function Step3() {
   ]
 
   return (
-    <motion.div
-      initial={{ x: "100vw", opacity: 0, scale: 0.98 }}  // section slides in from right
-      animate={{ x: 0, opacity: 1, scale: 1 }}
-      transition={{
-        duration: 2.6,                                   // slow animation
-        ease: [0.12, 1, 0.32, 1]                         // smooth easing
-      }}
+    <div
+      
       className='space-y-10'
     >
       <div className='space-y-3 text-center'>
@@ -47,15 +42,9 @@ export default function Step3() {
 
       <div className="grid sm:grid-cols-3 gap-3">
         {process.map((item, index) => (
-          <motion.div
+          <div
             key={item.id}
-            initial={{ y: 40, opacity: 0 }}       
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              duration: 1.2,
-              ease: [0.25, 1, 0.5, 1],
-              delay: index * 0.2,                
-            }}
+           
             className='bg-[#F2F2F2] rounded-lg space-y-5 p-4'
           >
             <div className="flex justify-between items-center">
@@ -72,9 +61,9 @@ export default function Step3() {
                 {item.disc}
               </p>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
-    </motion.div>
+    </div>
   )
 }

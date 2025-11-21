@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { MoreVertical } from "lucide-react";
@@ -53,6 +54,17 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({ row, actions }) => {
     }
   }, [open]);
 
+  // Add this useEffect to handle portal container positioning
+useEffect(() => {
+  if (open && buttonRef.current) {
+    // Force the portal to be positioned relative to viewport
+    document.body.style.position = 'relative';
+  }
+  return () => {
+    document.body.style.position = '';
+  };
+}, [open]);
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -98,7 +110,10 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({ row, actions }) => {
     <>
       <button
         ref={buttonRef}
-        onClick={() => setOpen(!open)}
+        onClick={(e) => {
+    e.stopPropagation();
+    setOpen(!open);
+  }}
         className="p-2 cursor-pointer rounded-md hover:bg-gray-100"
       >
     <Image className="cursor-pointer" src='/images/menu.svg' alt="Menu" height={14} width={14} />
@@ -109,7 +124,7 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({ row, actions }) => {
         createPortal(
           <div
             ref={dropdownRef}
-            className="absolute bg-white shadow-2xl rounded-lg w-28"
+            className="absolute z-[9999999999999] bg-white shadow-2xl rounded-lg w-28"
             style={{
               top: `${position.top}px`,
               left: `${position.left}px`,

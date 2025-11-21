@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import FilterDropdown from "./FilterDropdown";
-import Pagination from "./Pagination";
-import ActionDropdown from "./ActionDropdown";
+import FilterDropdown from "@/app/shared/FilterDropdown";
+import Pagination from "@/app/shared/Pagination";
+import ActionDropdown from "@/app/shared/ActionDropdown";
 
 export interface BottomAction {
   label: string;
@@ -112,10 +112,10 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
         return "text-[#11224E]";
       case "contacted":
         return "text-[#D2CB15]";
-      case "engaged":
-        return "text-[#E861F4]";
-      case "converted":
+      case "engaging":
         return "text-[#0CD767]";
+      case "awaiting":
+        return "text-[#E28413]";
       case "completed":
         return "text-[#0CD767]";
       case "ongoing":
@@ -127,7 +127,7 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
       case "sent":
         return "text-[#11224E]";
       case "opened":
-        return "text-[#0CD767]";
+        return "text-[#11224E]";
          case "active":
         return "text-[#0CD767]";
          case "inactive":

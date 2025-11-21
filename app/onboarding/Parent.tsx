@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import PrimaryBtn from "../ui/buttons/PrimaryBtn";
 
 // Import step components
@@ -19,6 +20,7 @@ export default function Parent() {
   const totalSteps = 6;
 
   const stepComponents = [Step1, Step2, Step3, Step4, Step5, Step6];
+
   const handleNext = () => {
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
@@ -57,7 +59,7 @@ export default function Parent() {
   const CurrentStepComponent = stepComponents[currentStep - 1];
 
   return (
-    <div className=" p-2 sm:p-10 min-h-screen flex flex-col relative overflow-hidden">
+    <div className="p-2 sm:p-10 min-h-screen flex flex-col relative overflow-hidden">
       {/* Header */}
       <div className="flex justify-between">
         <button onClick={handleBack} className="flex gap-2 group">
@@ -67,7 +69,7 @@ export default function Parent() {
             height={20}
             width={20}
           />
-          <p className="heading-6 font-regular text-[#414652]  group-hover:underline">
+          <p className="heading-6 font-regular text-[#414652] group-hover:underline">
             Back
           </p>
         </button>
@@ -80,7 +82,6 @@ export default function Parent() {
       </div>
 
       {/* Background Gradients */}
-
       <Image
         src="/images/gradient1.svg"
         alt="gradient1"
@@ -111,21 +112,35 @@ export default function Parent() {
       />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col justify-center items-center text-center gap-10 mx-auto ">
-        {/* Render current step component */}
+      <div className="flex-1 flex flex-col justify-center items-center text-center gap-10 mx-auto">
+        {/* Logo */}
         <Image
           src="/images/mainlogo.svg"
           alt="Main logo"
           height={85}
           width={80}
         />
-        <CurrentStepComponent />
+        
+        {/* Animated Step Content */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentStep}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ 
+              duration: 0.4,
+              ease: "easeOut"
+            }}
+            className="w-full"
+          >
+            <CurrentStepComponent />
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Progress Dots and Next Button */}
       <div className="flex flex-col items-center space-y-[122px] justify-between">
-        {/* Progress Dots */}
-
         {/* Next Button */}
         <div className="pb-10 pt-[60px]">
           <PrimaryBtn
@@ -135,6 +150,8 @@ export default function Parent() {
             imagePosition="right"
           />
         </div>
+        
+        {/* Progress Dots */}
         <div className="flex gap-2 justify-center items-center pb-3">
           {Array.from({ length: totalSteps }).map((_, index) => (
             <div

@@ -15,8 +15,8 @@ const Leads = () => {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between">
         <div className="space-y-2">
-          <h1 className="heading-4 text-[#111827]">Leads dashboard</h1>
-          <p className="heading-5 text-[#70747D]">
+          <h1 className="heading-4 font-medium text-[#111827]">Leads dashboard</h1>
+          <p className="heading-5 font-regular text-[#70747D]">
             Get a clear snapshot of your lead performance and activity.
           </p>
         </div>

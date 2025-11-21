@@ -13,13 +13,8 @@ export default function Step1() {
 
   return (
 
-    <motion.div
-      initial={{ x: "100vw", opacity: 0, scale: 0.98 }} 
-      animate={{ x: 0, opacity: 1, scale: 1 }}
-      transition={{
-        duration: 1.6,
-        ease: [0.12, 1, 0.32, 1],
-      }}
+    <div
+      
       className="space-y-10"
     >
       <div className="space-y-3">
@@ -33,15 +28,9 @@ export default function Step1() {
 
       <div className="grid sm:grid-cols-2 gap-5">
         {process.map((item, index) => (
-          <motion.div
+          <div
             key={item.id}
-            initial={{ y: 40, opacity: 0 }}       
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              duration: 1.2,
-              ease: [0.25, 1, 0.5, 1],
-              delay: index * 0.15,              
-            }}
+            
             className="bg-[#F2F2F2] rounded-lg flex gap-3 items-center p-2"
           >
             <div className="bg-white custom-shadow p-2 rounded-lg">
@@ -50,9 +39,9 @@ export default function Step1() {
             <p className="heading-5 font-regular text-[#111827]">
               {item.title}
             </p>
-          </motion.div>
+          </div>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 }

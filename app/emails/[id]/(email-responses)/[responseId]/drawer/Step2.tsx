@@ -26,7 +26,7 @@ declare global {
   }
 }
 
-export default function ProfessionalEmailEditor() {
+export default function Step2() {
   const editorRef = useRef<HTMLDivElement>(null);
   const quillRef = useRef<QuillInstance | null>(null);
   const [subject, setSubject] = useState('Your journey with us starts here');
@@ -339,15 +339,13 @@ export default function ProfessionalEmailEditor() {
       `}</style>
 
       {/* Header */}
-      <div className="flex gap-3 mb-6">
-        <div className="p-3 bg-[#ECFDF2] rounded-lg  flex items-center justify-center flex-shrink-0">
-          <Image src='/images/template.svg' alt='Template' height={24} width={24} />
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="heading-4 font-semibold text-[#111827]">Welcome email</p>
-          <p className="heading-6 font-regular text-[#70747D]">Make a great first impression with a warm welcome.</p>
-        </div>
-      </div>
+       <div className="flex gap-2 pb-8 items-center">
+                  <Image src='/images/profile-icon.png'alt='profile' height={44} width={44} />
+                  <div className="space-y-0 5">
+              <p className="heading-6 font-medium text-[#111827]">Floyd Miles</p>
+              <p className="heading-7 font-regular text-[#70747D]">miles@gmail.com</p>
+              </div>
+              </div>
 
       {/* Editable Subject Line */}
       <div className="mb-3">

@@ -19,10 +19,8 @@ export default function Step6() {
   ];
 
   return (
-    <motion.div
-      initial={{ x: "100vw", opacity: 0, scale: 0.98 }}
-      animate={{ x: 0, opacity: 1, scale: 1 }}
-      transition={{ duration: 2.4, ease: [0.16, 1, 0.3, 1] }}
+    <div
+    
       className="space-y-10"
     >
       <div className="space-y-3">
@@ -37,11 +35,9 @@ export default function Step6() {
       {/* Process Cards */}
       <div className="grid sm:grid-cols-2 gap-5">
         {process.map((item, index) => (
-          <motion.div
+          <div
             key={item.id}
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1.2, delay: index * 0.15 }}
+           
             className="bg-[#F2F2F2] rounded-lg flex gap-3 items-center p-2"
           >
             <div className="bg-white custom-shadow p-2 rounded-lg">
@@ -50,14 +46,12 @@ export default function Step6() {
             <p className="heading-5 font-regular text-[#111827]">
               {item.title}
             </p>
-          </motion.div>
+          </div>
         ))}
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: [0.25, 1, 0.5, 1] }}
+      <div
+        
         className="flex  gap-3 items-center justify-center"
       >
         <div
@@ -115,7 +109,7 @@ export default function Step6() {
           <span className="font-normal body-2 text-[#11224E]">AppointMe</span>{" "}
           to access these services securely.
         </p>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }

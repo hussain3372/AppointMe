@@ -48,7 +48,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
       </button>
 
       {open && (
-        <div className="absolute left-0 top-full mt-2 w-fit rounded-xl bg-[#FFFFFF99] shadow-2xl z-50">
+        <div className="absolute left-0 top-full mt-2 w-full  rounded-xl bg-[#FFFFFF99] shadow-2xl z-50">
           <ul className="max-h-56 overflow-y-auto">
             {options.map((opt) => (
               <li

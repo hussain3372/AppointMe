@@ -6,13 +6,8 @@ import { motion } from "framer-motion";
 
 export default function Step5() {
   return (
-    <motion.div
-      initial={{ x: "100vw", opacity: 0, scale: 0.98 }}   
-      animate={{ x: 0, opacity: 1, scale: 1 }}             
-      transition={{
-        duration: 1.6,                                     
-        ease: [0.12, 1, 0.32, 1]                            
-      }}
+    <div
+      
       className='space-y-10'
     >
       <div className="space-y-3">
@@ -29,6 +24,6 @@ export default function Step5() {
         placeholder='Enter API key' 
         className='w-full' 
       />
-    </motion.div>
+    </div>
   )
 }
