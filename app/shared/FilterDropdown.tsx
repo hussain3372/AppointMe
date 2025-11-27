@@ -54,7 +54,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
       <button
         ref={buttonRef}
         onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-[#F6F6F6] text-[#70747D] text-[12px] font-normal hover:bg-[#e2dddd] focus:outline-none focus:ring-2 focus:ring-orange-500"
+        className="flex items-center justify-between gap-2 p-2 rounded-lg bg-[#F6F6F6] text-[#70747D] text-[12px] font-normal hover:bg-[#e2dddd] focus:outline-none focus:ring-2 focus:ring-orange-500"
       >
         <span>{value || label}</span>
         <ChevronDown

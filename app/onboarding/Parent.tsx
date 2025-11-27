@@ -146,6 +146,7 @@ export default function Parent() {
           <PrimaryBtn
             onClick={handleNext}
             label={getButtonText()}
+            fontSize="14px"
             imageSrc="/images/arrow-right.svg"
             imagePosition="right"
           />

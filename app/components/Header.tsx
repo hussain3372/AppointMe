@@ -164,7 +164,7 @@ const contentVariants = {
                 strokeLinejoin="round"
               />
             </svg>
-            {currentRoute}
+           z {currentRoute}
           </div>
 
           {/* Mobile */}
@@ -181,6 +181,7 @@ const contentVariants = {
                 alt="menu"
               />
             </button>
+            
             <Image
               src="/images/mobile-logo.svg"
               width={40}

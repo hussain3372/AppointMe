@@ -163,7 +163,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <input
                   ref={inputRef}
                   type="text"
-                  placeholder="Search..."
+                  placeholder="Search here..."
                   className={`py-2 pl-4 pr-8 flex items-center outline-none rounded-full bg-[#FFFFFF99] shadow-[0_6px_8px_0_rgba(0,0,0,0.12)] backdrop-blur-[20px] text-[14px] font-normal leading-5 ${
                     minimized ? "hidden" : ""
                   }`}
@@ -212,7 +212,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
                 {openDropdowns.includes("essential") && (
                   <div className="flex flex-col mt-3 space-y-1">
-                    <NavLink href="/dashboard" minimized={minimized}>
+                    <NavLink href="/dashboard" minimized={minimized}  >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -249,7 +249,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         Dashboard
                       </span>
                     </NavLink>
-                    <NavLink href="/people" minimized={minimized}>
+                    <NavLink href="/people" minimized={minimized}  >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -328,7 +328,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                       </svg>
                       <span className={minimized ? "hidden" : ""}>Leads</span>
                     </NavLink>
-                    <NavLink href="/campaigns" minimized={minimized}>
+                    <NavLink href="/campaigns" minimized={minimized}  >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"

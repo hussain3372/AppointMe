@@ -35,6 +35,7 @@ interface ConfirmationModalProps {
   inputDisabled?: boolean;
   // Close on overlay click
   closeOnOverlayClick?: boolean;
+  messageWidth?: string;
 }
 
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
@@ -46,6 +47,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   confirmText = "Confirm",
   cancelText = "Go back",
   icon,
+  messageWidth = "",
   showInput = false,
   inputPlaceholder = "Enter details",
   inputLabel = "Card details",
@@ -72,7 +74,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   // Handle overlay click
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!closeOnOverlayClick) return;
-    
+
     // Check if click is on the overlay (not the modal content)
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       onClose();
@@ -82,20 +84,20 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   // Handle ESC key press
   useEffect(() => {
     const handleEscapeKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
+      if (e.key === "Escape" && isOpen) {
         onClose();
       }
     };
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEscapeKey);
+      document.addEventListener("keydown", handleEscapeKey);
       // Prevent body scroll when modal is open
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscapeKey);
-      document.body.style.overflow = 'unset';
+      document.removeEventListener("keydown", handleEscapeKey);
+      document.body.style.overflow = "unset";
     };
   }, [isOpen, onClose]);
 
@@ -104,7 +106,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   // Function to highlight specific text in message
   const renderMessage = () => {
     if (!highlightText) return message;
-    
+
     const parts = message.split(highlightText);
     return (
       <>
@@ -112,7 +114,9 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
           <React.Fragment key={index}>
             {part}
             {index < parts.length - 1 && (
-              <span className="text-[#F87B1B]  heading-7 font-normal">{highlightText}</span>
+              <span className="text-[#F87B1B]  heading-7 font-normal">
+                {highlightText}
+              </span>
             )}
           </React.Fragment>
         ))}
@@ -125,34 +129,38 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
     title: inputLabel,
     placeholder: inputPlaceholder,
     value: localInputValue,
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => 
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
       handleInputChange(e.target.value),
     disabled: inputDisabled,
     className: "w-full",
   };
 
   return ReactDOM.createPortal(
-    <div 
+    <div
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm"
       onClick={handleOverlayClick}
     >
-      <div 
+      <div
         ref={modalRef}
-        className="bg-white rounded-xl max-w-md w-full p-5 relative animate-fadeIn"
+        className="bg-white rounded-xl max-w-md w-[89%] sm:w-full p-5 relative animate-fadeIn"
         onClick={(e) => e.stopPropagation()} // Prevent click from bubbling to overlay
-      >
+      > 
         {/* Icon */}
         <div className="flex items-center justify-center mb-5">
-          {icon && <Image src={`${icon}`} width={140} height={140} alt="icon" />}
+          {icon && (
+            <Image src={`${icon}`} width={140} height={140} alt="icon" />
+          )}
         </div>
 
         {/* Title */}
-        <h2 className="text-xl font-semibold text-[#111827] text-center mb-2">
+        <h2 className="heading-5 font-medium text-[#11224E] text-center mb-2">
           {title}
         </h2>
 
         {/* Message */}
-        <p className="text-sm text-[#6B7280] text-center mb-6 leading-relaxed">
+        <p className="heading-7 font-normal w-full max-w-[250px] mx-auto  text-[#70747D] text-center mb-6 leading-relaxed" 
+        style={{ maxWidth: messageWidth || "250px" }}   
+        >
           {renderMessage()}
         </p>
 
@@ -168,7 +176,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
                 <span className="heading-7 font-medium text-[#11224E]">
                   {record.label}
                 </span>
-                <span className="heading-7 font-medium text-[#111827]">
+                <span className="heading-5 font-medium text-[#11224E]">
                   {record.value}
                 </span>
               </div>
@@ -180,17 +188,9 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         {showInput && (
           <div className="mb-6">
             {inputAs === "select" ? (
-              <Input
-                as="select"
-                options={inputOptions}
-                {...baseInputProps}
-              />
+              <Input as="select" options={inputOptions} {...baseInputProps} />
             ) : (
-              <Input
-                as="input"
-                type={inputType}
-                {...baseInputProps}
-              />
+              <Input as="input" type={inputType} {...baseInputProps} />
             )}
           </div>
         )}
@@ -199,6 +199,8 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         <div className="flex gap-3">
           {cancelText && (
             <PrimaryBtn
+                            fontSize="12px"
+
               variant="soft"
               label={cancelText}
               width="100%"
@@ -208,6 +210,8 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
             />
           )}
           <PrimaryBtn
+                          fontSize="12px"
+
             variant="filled"
             label={confirmText}
             width="100%"

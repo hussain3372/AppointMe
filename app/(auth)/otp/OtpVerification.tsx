@@ -148,6 +148,7 @@ const OtpVerification: React.FC = () => {
               variant="filled"
               label="Verify"
               width="100%"
+              fontSize="16px"
               imageSrc="/images/filled-arrow.svg"
               imagePosition="right"
               type="submit"

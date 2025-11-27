@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+@tailwind utilities;
 body {
   background-color: white;
 }
@@ -39,4 +40,26 @@ select {
 /* Override any parent overflow constraints for select containers */
 .relative > select {
   position: static;
+}
+@layer utilities {
+  .rotate-month {
+    @apply sm:rotate-0 rotate-[320deg] block origin-center;
+  }
+}
+
+/* Ensure dropdowns appear above other content */
+.dropdown-container {
+  position: relative;
+  z-index: 20;
+}
+
+.dropdown-menu {
+  z-index: 50;
+  position: absolute;
+  width: 100%;
+}
+
+/* Prevent body scroll when dropdown is open */
+body.dropdown-open {
+  overflow: hidden;
 }

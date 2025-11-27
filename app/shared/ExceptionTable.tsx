@@ -308,11 +308,11 @@ const ExceptionTable: React.FC<ExceptionTableProps> = ({
                 </th>
               )}
               {columns.map((col) => (
-                <th key={col.key} className="p-3 font-semibold">
+                <th key={col.key} className="p-3 font-normal">
                   {col.label}
                 </th>
               ))}
-              {actions && <th className="p-3">Action</th>}
+              {actions && <th className="p-3 font-normal heading-7">Action</th>}
             </tr>
           </thead>
 
@@ -338,7 +338,7 @@ const ExceptionTable: React.FC<ExceptionTableProps> = ({
                 ))}
 
                 {actions && (
-                  <td className="p-4 relative">
+                  <td className=" relative">
                     {actionsType === "dropdown" ? (
                       <ActionDropdown actions={actions} row={row} />
                     ) : (

@@ -119,6 +119,7 @@ const NewPassword: React.FC = () => {
             <PrimaryBtn
               variant="filled"
               label="Reset password"
+              fontSize="16px"
               width="100%"
               imageSrc="/images/filled-arrow.svg"
               imagePosition="right"

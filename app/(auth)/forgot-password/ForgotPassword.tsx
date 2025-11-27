@@ -1,62 +1,89 @@
 "use client";
 
 import React, { useState } from "react";
-import Input from "../../ui/Input"; 
+import Input from "../../ui/Input";
 import PrimaryBtn from "@/app/ui/buttons/PrimaryBtn";
-import AuthHeader from "../register/AuthHeader"; 
+import AuthHeader from "../register/AuthHeader";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+import { apiClient } from "@/app/api/client"; // adjust path if needed
+import { authApi } from "@/app/api/auth";
 
-const Register: React.FC = () => {
+interface ForgotPasswordRequest {
+  email: string;
+}
+
+const ForgotPassword: React.FC = () => {
   const [formData, setFormData] = useState({
-    email: ""
+    email: "",
   });
   const [errors, setErrors] = useState({
-    email: ""
+    email: "",
   });
+  const [loading, setLoading] = useState(false);
 
-  const router = useRouter()
+  const router = useRouter();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
+
     // Clear error when user starts typing
     if (errors[name as keyof typeof errors]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
 
   const validateForm = () => {
-    const newErrors = {
-      email: ""
-    };
-
+    const newErrors = { email: "" };
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     }
-
     setErrors(newErrors);
     return !newErrors.email;
   };
 
-  const handleSendLink = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSendLink = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    
-    if (validateForm()) {
-      // Here you can add your forgot password API call logic
-      console.log("Sending reset link to:", formData.email);
-      router.push('/otp')
+
+    if (!validateForm()) return;
+
+    setLoading(true);
+    try {
+      const payload: ForgotPasswordRequest = { email: formData.email };
+      const data = await authApi.forgotPassword(payload);
+
+      if (data?.error) {
+        toast.error(data.error.message);
+        setLoading(false);
+        return;
+      }
+
+      // Assuming response has a success message
+      if (data.success) {
+        toast.success(data.message || "Reset link sent successfully!");
+        router.push("/otp");
+      }
+    } catch (error: any) {
+      // Handle API error
+      if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="flex flex-col w-full">
-      {/* Auth Header */}
       <AuthHeader
         rightText="Remember your password?"
         rightLinkText="Login"
@@ -68,11 +95,10 @@ const Register: React.FC = () => {
             Forgot password
           </h1>
           <p className="text-[#70747D] body-2 sm:mb-[60px] mb-[30px]">
-            Recover access to your account in a few simple steps.{" "}
+            Recover access to your account in a few simple steps.
           </p>
         </div>
         <form className="flex flex-col gap-8 w-full">
-          {/* Email Field */}
           <div className="flex flex-col">
             <Input
               title="Email"
@@ -90,11 +116,13 @@ const Register: React.FC = () => {
           <div className="sm:mt-7 mt-0 sm:mb-[60px] mb-[30px]">
             <PrimaryBtn
               variant="filled"
-              label="Send link"
+              label={loading ? "Sending..." : "Send link"}
+              fontSize="16px"
               width="100%"
               imageSrc="/images/filled-arrow.svg"
               imagePosition="right"
               onClick={handleSendLink}
+              disabled={loading}
             />
           </div>
         </form>
@@ -103,4 +131,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default ForgotPassword;

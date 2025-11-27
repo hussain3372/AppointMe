@@ -3,7 +3,7 @@ import ForgotPassword from './ForgotPassword'
 export default function page() {
   return (
     <div>
-      <ForgotPassword/>
+      <ForgotPassword />
     </div>
   )
 }

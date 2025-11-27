@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import FilterDropdown from "./FilterDropdown";
 import Pagination from "./Pagination";
 import ActionDropdown from "./ActionDropdown";
+import TruncateTooltip from "./TruncateTooltip";
 
 export interface BottomAction {
   label: string;
@@ -24,18 +25,19 @@ export type Column = {
   type?: "text" | "image" | "status" | "link";
   linkUrlKey?: string;
   imagePosition?: "left" | "right";
-  imageUrlKey?:string
+  imageUrlKey?: string;
+  width?: string;
 };
 
 interface SharedTableProps {
   columns: Column[];
   data: Record<string, unknown>[];
   // title?: string;
-  isBorder?:boolean;
+  isBorder?: boolean;
   filters?: { key: string; label: string; options: string[] }[];
   searchable?: boolean;
   filterable?: boolean;
-  title?: string | React.ReactNode; 
+  title?: string | React.ReactNode;
 
   selectable?: boolean;
   actions?: (row: Record<string, unknown>) => React.ReactNode;
@@ -44,6 +46,7 @@ interface SharedTableProps {
   showSelectionCount?: boolean;
   actionsType?: "dropdown" | "inline" | "buttons";
   hidePagination?: boolean;
+  actionColClassName?: string;
 }
 
 // Custom Checkbox Component
@@ -128,13 +131,13 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
         return "text-[#11224E]";
       case "opened":
         return "text-[#0CD767]";
-         case "active":
+      case "active":
         return "text-[#0CD767]";
-         case "inactive":
+      case "inactive":
         return "text-[#E28413]";
-         case "expired":
+      case "expired":
         return "text-[#EA3232]";
-         case "failed":
+      case "failed":
         return "text-[#EA3232]";
       default:
         return "text-[#11224E] ";
@@ -142,11 +145,16 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
   };
 
   return (
-    <span
-      className={`inline-flex bg-[#F6F6F6] items-center px-2 py-1.5 rounded-full text-[12px] font-normal ${getStatusStyles()}`}
-    >
-      {status}
-    </span>
+    <div className="relative">
+      {status === "New" && (
+        <div className="h-[6px] w-[6px] bg-[#F87B1B] border border-[#FFFFFF] rounded-full absolute top-0 left-0.5"></div>
+      )}
+      <span
+        className={`inline-flex bg-[#F6F6F6] items-center px-2 py-1.5 rounded-full text-[12px] font-normal ${getStatusStyles()}`}
+      >
+        {status}
+      </span>
+    </div>
   );
 };
 
@@ -173,6 +181,7 @@ const ImageCell: React.FC<{
     </div>
   );
 };
+
 const SharedTable: React.FC<SharedTableProps> = ({
   columns,
   data,
@@ -188,6 +197,7 @@ const SharedTable: React.FC<SharedTableProps> = ({
   bottomActions,
   showSelectionCount = true,
   hidePagination = false, // Add this with default value
+   actionColClassName, 
 }) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [search, setSearch] = useState("");
@@ -259,13 +269,19 @@ const SharedTable: React.FC<SharedTableProps> = ({
           </a>
         );
 
+      // default:
+      //   return value;
       default:
-        return value;
+        return <TruncateTooltip>{String(value)}</TruncateTooltip>;
     }
   };
 
   return (
-    <div className={`bg-white  ${isBorder ? "border border-[#ECEDEE]" : ""}  rounded-xl p-4 relative`}>
+    <div
+      className={`bg-white  ${
+        isBorder ? "border border-[#ECEDEE]" : ""
+      }  rounded-xl p-4 relative`}
+    >
       <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
         <div>
           <h2 className="body-1 font-medium text-[#111827]">{title}</h2>
@@ -274,7 +290,7 @@ const SharedTable: React.FC<SharedTableProps> = ({
           {searchable && (
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Search here..."
               className="px-4 py-2 border border-gray-300 rounded-lg w-64 focus:ring-2 focus:ring-orange-500 outline-none"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -302,8 +318,8 @@ const SharedTable: React.FC<SharedTableProps> = ({
         </div>
       </div>
 
-      <div className="overflow-x-auto hide-scrollbar">
-        <table className="min-w-full border-collapse ">
+      <div className="overflow-x-auto hide-scrollbar max-w-[1122px]">
+        <table className="min-w-full border-collapse w-full  ">
           <thead>
             <tr className="bg-[#F2F2F2] rounded-lg text-left text-[12px] text-[#111827] uppercase">
               {selectable && (
@@ -318,11 +334,23 @@ const SharedTable: React.FC<SharedTableProps> = ({
                 </th>
               )}
               {columns.map((col) => (
-                <th key={col.key} className="p-3 font-semibold">
+                <th
+                  key={col.key}
+                  className={`p-3 heading-7 font-normal text-[#111827] truncate`}
+                  style={
+                    col.width
+                      ? {
+                          width: col.width,
+                          minWidth: col.width,
+                          maxWidth: col.width,
+                        }
+                      : {}
+                  }
+                >
                   {col.label}
                 </th>
               ))}
-              {actions && <th className="p-3">Action</th>}
+              {actions && <th className="p-4 heading-7 font-normal">Action</th>}
             </tr>
           </thead>
 
@@ -342,13 +370,25 @@ const SharedTable: React.FC<SharedTableProps> = ({
                 )}
 
                 {columns.map((col) => (
-                  <td key={col.key} className="p-4">
+                  <td
+                    key={col.key}
+                    className="p-3 truncate"
+                    style={
+                      col.width
+                        ? {
+                            width: col.width,
+                            minWidth: col.width,
+                            maxWidth: col.width,
+                          }
+                        : {}
+                    }
+                  >
                     {renderCell(row, col)}
                   </td>
                 ))}
 
                 {actions && (
-                  <td className="p-4 relative">
+                  <td className={`${actionColClassName || "p-4"} relative`}>
                     {actionsType === "dropdown" ? (
                       <ActionDropdown actions={actions} row={row} />
                     ) : (

@@ -9,6 +9,8 @@ interface LightBtnProps {
   label?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
+  fontSize?: string;
+  leading?: string;
   imageSrc?: string;
   imagePosition?: "left" | "right";
   imageSize?: number;
@@ -19,9 +21,12 @@ const LightBtn: React.FC<LightBtnProps> = ({
   variant = "filled",
   width = "100%",
   label = "Light Button",
+  fontSize = "",
   onClick,
   disabled = false,
   imageSrc,
+  leading = "",
+
   imagePosition = "left",
   imageSize = 20,
   color, // ✅ optional background for outlined
@@ -33,7 +38,9 @@ const LightBtn: React.FC<LightBtnProps> = ({
       fontWeight: 400,
       borderRadius: "100px",
       padding: "12px 20px",
-      fontSize: "0.9rem",
+      lineHeight: leading || "16px",
+
+      fontSize: fontSize || "12px",
       cursor: disabled ? "not-allowed" : "pointer",
       transition: "all 0.2s ease",
       width,

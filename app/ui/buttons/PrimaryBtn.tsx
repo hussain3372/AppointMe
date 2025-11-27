@@ -10,6 +10,8 @@ interface PrimaryBtnProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   imageSrc?: string;
+  fontSize?: string;
+  leading?: string;
   imagePosition?: "left" | "right";
   imageSize?: number;
   color?: string; // ✅ background color for outlined button
@@ -20,6 +22,8 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
   variant = "filled",
   width = "100%",
   label = "Primary Button",
+  fontSize = "",
+  leading = "",
   onClick,
   disabled = false,
   imageSrc,
@@ -35,7 +39,8 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
       fontWeight: 400,
       borderRadius: "100px",
       padding: "12px 20px",
-      fontSize: "0.9rem",
+      lineHeight: leading || "16px",
+      fontSize: fontSize || "12px",
       cursor: disabled ? "not-allowed" : "pointer",
       transition: "all 0.2s ease",
       width,
@@ -79,6 +84,7 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
       onClick={onClick}
       disabled={disabled}
       aria-disabled={disabled}
+      className=""
     >
       {imageSrc && imagePosition === "left" && (
         <img

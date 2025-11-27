@@ -10,6 +10,8 @@ interface SecondaryBtnProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   imageSrc?: string; // ✅ optional image
+  leading?: string;
+
   imagePosition?: "left" | "right"; // ✅ image placement
   imageSize?: number; // ✅ control image size
 }
@@ -23,6 +25,7 @@ const SecondaryBtn: React.FC<SecondaryBtnProps> = ({
   imageSrc,
   imagePosition = "left",
   imageSize = 20,
+  leading = "",
 }) => {
   const getStyles = (): React.CSSProperties => {
     const base: React.CSSProperties = {
@@ -31,6 +34,7 @@ const SecondaryBtn: React.FC<SecondaryBtnProps> = ({
       fontWeight: 400,
       borderRadius: "100px",
       padding: "12px 20px",
+      lineHeight: leading || "16px",
       fontSize: "0.9rem",
       cursor: disabled ? "not-allowed" : "pointer",
       transition:

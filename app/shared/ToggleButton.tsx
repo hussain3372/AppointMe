@@ -18,13 +18,13 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({ initial = false, onToggle }
   return (
  <button
   onClick={handleClick}
-  className={`w-[33.333px] h-5 flex items-center rounded-full p-1 border-2 border-[#111827] duration-300 ${
-    enabled ? "bg-[#11224E]" : "bg-transparent"
+  className={`w-[33.333px] h-5 flex items-center rounded-full p-1  duration-300 ${
+    enabled ? "bg-[#F87B1B]" : "bg-transparent border-2 border-[#111827]"
   }`}
 >
   <div
-    className={`w-3 h-3 rounded-full shadow-md border-2 border-[#111827] transform duration-300 bg-white ${
-      enabled ? "translate-x-3" : "translate-x-0"
+    className={`w-2 h-2 rounded-full shadow-md  transform duration-300 bg-white ${
+      enabled ? "translate-x-4" : "translate-x-0 border-2 border-[#111827]"
     }`}
   />
 </button>

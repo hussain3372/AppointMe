@@ -64,9 +64,10 @@ const CustomCheckbox: React.FC<CheckboxProps> = ({ checked, onChange }) => {
 interface PricingCardProps {
   // Required props
   title: string;
+  showFeature?:boolean;
   description: string;
   price: string;
-  period: string;
+  period?: string;
   buttonText: string;
   features: string[];
   onBuyNow?: () => void;
@@ -224,6 +225,7 @@ interface PricingCardProps {
 const PricingCard: React.FC<PricingCardProps> = ({
   // Required props
   title,
+  showFeature,
   description,
   price,
   period,
@@ -274,7 +276,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
   showButton = true,
   buttonBg = "bg-[#11224E]", // Your preferred button color
   buttonTextColor = "text-white",
-  buttonClass = "text-[16px]",
+  buttonClass = "text-[12px]",
   buttonWeight = "font-normal",
   buttonPadding = "py-3 px-6", // Adjusted padding
   buttonRadius = "rounded-full", // Changed to full rounded
@@ -408,7 +410,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
       {showButton && (
         <button
           onClick={onBuyNow}
-          className={`${buttonSpacing} ${buttonWidth} ${buttonPadding} ${buttonRadius} ${buttonClass} ${buttonWeight} ${buttonClasses} cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 relative z-10 ${
+          className={`${buttonSpacing} ${buttonWidth} ${buttonPadding} leading-4  ${buttonRadius} ${buttonClass} ${buttonWeight} ${buttonClasses} cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 relative z-10 ${
             isHovered && enableHoverEffects
               ? `${hoverButtonBg} ${hoverButtonText} shadow-md`
               : `${buttonBg} ${buttonTextColor} shadow-md`
@@ -441,6 +443,11 @@ const PricingCard: React.FC<PricingCardProps> = ({
 
       {/* Features */}
       <div className="grow">
+        {
+          showFeature && (
+          <h5 className="heading-5 font-medium text-[#111827] pb-3">Features</h5>
+          )
+        }
         <ul className={`${featureSpacing} relative z-10 h-full`}>
           {features.map((feature, idx) => (
             <li
@@ -470,7 +477,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
                   </div>
                 )
               )}
-              <span className="flex-1 whitespace-normal leading-relaxed">
+              <span className="flex-1 whitespace-normal leading-relaxed heading-6 font-normal text-[#111827]">
                 {feature}
               </span>
             </li>
