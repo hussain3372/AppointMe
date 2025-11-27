@@ -318,7 +318,7 @@ const SharedTable: React.FC<SharedTableProps> = ({
         </div>
       </div>
 
-      <div className="overflow-x-auto hide-scrollbar max-w-[1122px]">
+      <div className="overflow-x-auto hide-scrollbar">
         <table className="min-w-full border-collapse w-full  ">
           <thead>
             <tr className="bg-[#F2F2F2] rounded-lg text-left text-[12px] text-[#111827] uppercase">
