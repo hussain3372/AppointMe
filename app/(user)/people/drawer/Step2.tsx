@@ -1,6 +1,5 @@
 "use client";
-// import LightBtn from "@/app/ui/buttons/LightButton";
-// import PrimaryBtn from "@/app/ui/buttons/PrimaryBtn";
+
 import Input from "@/app/ui/Input";
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
@@ -107,68 +106,7 @@ const Step2 = () => {
     return `${displayHour}:${minutes} ${ampm}`;
   };
 
-  // Dropdown component
-  // const Dropdown = ({
-  //   isOpen,
-  //   onToggle,
-  //   options,
-  //   selectedValue,
-  //   onSelect,
-  //   placeholder,
-  //   ref
-  // }: {
-  //   isOpen: boolean;
-  //   onToggle: () => void;
-  //   options: DropdownOption[];
-  //   selectedValue: string;
-  //   onSelect: (value: string) => void;
-  //   placeholder: string;
-  //   ref: React.RefObject<HTMLDivElement>;
-  // }) => {
-  //   const selectedOption = options.find(opt => opt.value === selectedValue);
 
-  //   return (
-  //     <div ref={ref} className="relative">
-  //       <div
-  //         onClick={onToggle}
-  //         className="cursor-pointer"
-  //       >
-  //         <Input
-  //           title={placeholder}
-  //           placeholder={placeholder}
-  //           className="w-full cursor-pointer"
-  //           value={selectedOption?.label || ""}
-  //           readOnly
-  //         />
-  //       </div>
-  //       <Image
-  //         src='/images/dropdown.svg'
-  //         alt="Dropdown"
-  //         width={20}
-  //         height={20}
-  //         className="absolute top-4 right-3 pointer-events-none"
-  //       />
-
-  //       {/* Dropdown Menu */}
-  //       {isOpen && (
-  //         <div className="absolute top-full left-0 right-0 bg-white shadow-2xl rounded-lg z-10 mt-1 border border-gray-100">
-  //           {options.map((option) => (
-  //             <div
-  //               key={option.value}
-  //               onClick={() => {
-  //                 onSelect(option.value);
-  //                 onToggle();
-  //               }}
-  //               className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors duration-150 first:rounded-t-lg last:rounded-b-lg"
-  //             >
-  //               <span className="text-sm text-gray-900">{option.label}</span>
-  //             </div>
-  //           ))}
-  //         </div>
-  //       )}
-  //     </div>
-  //   );
-  // };
 
   return (
     <div className="space-y-8 pt-8">
@@ -224,7 +162,7 @@ const Step2 = () => {
               <Input
                 title="Start date"
                 placeholder="Choose date"
-    className="w-full cursor-pointer placeholder:text-[#414652]"
+                className="w-full cursor-pointer placeholder:text-[#414652]"
                 value={startDate ? startDate.toLocaleDateString() : ""}
                 readOnly
               />
@@ -238,15 +176,17 @@ const Step2 = () => {
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
-              className="absolute top-0 left-0 w-full h-full  cursor-pointer"
-              wrapperClassName="w-full"
+              popperPlacement="top-start"
+              className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+              wrapperClassName="absolute top-0 left-0 w-full"
+              calendarClassName="!z-[9999]"
             />
             <Image
               src="/images/calender.svg"
               alt="Select date"
               height={20}
               width={20}
-              className="absolute top-3 right-3 pointer-events-none"
+              className="absolute top-3 right-3 pointer-events-none z-20"
             />
           </div>
 
@@ -295,7 +235,6 @@ const Step2 = () => {
           {/* Follow-up Interval Dropdown */}
           <Dropdown
             title="Follow-up interval"
-
             isOpen={followUpIntervalOpen}
             onToggle={() => setFollowUpIntervalOpen(!followUpIntervalOpen)}
             options={followUpIntervalOptions}
@@ -315,7 +254,6 @@ const Step2 = () => {
           selectedValue={selectedFrequency}
           onSelect={setSelectedFrequency}
           placeholder="Choose frequency"
-          
           ref={frequencyRef}
         />
       </div>

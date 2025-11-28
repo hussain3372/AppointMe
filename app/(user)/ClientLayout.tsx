@@ -59,7 +59,12 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
     return () => mq.removeEventListener("change", handle);
   }, []);
 
-  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
+  const toggleSidebar = () => {
+    if (window.innerWidth < 1281) {
+      setSidebarOpen((prev) => !prev)
+      
+    }
+  };
   const handleMinimize = () => setMinimized((prev) => !prev);
 
   const getMarginLeft = () => {

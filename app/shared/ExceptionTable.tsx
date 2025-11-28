@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import FilterDropdown from "./FilterDropdown";
 import Pagination from "./Pagination";
 import ActionDropdown from "./ActionDropdown";
+import TruncateTooltip from "./TruncateTooltip";
 
 export interface BottomAction {
   label: string;
@@ -10,22 +11,34 @@ export interface BottomAction {
   className?: string;
 }
 
+interface TableData {
+  id: number | string;
+  [key: string]: string | number | boolean | undefined;
+}
+interface ExceptionTableProps {
+  columns: Column[];
+  data: Record<string, unknown>[];
+}
 export type Column = {
   key: string;
   label: string;
   type?: "text" | "image" | "status" | "link";
   linkUrlKey?: string;
   imagePosition?: "left" | "right";
+  imageUrlKey?: string;
+  width?: string;
 };
 
 interface ExceptionTableProps {
   columns: Column[];
   data: Record<string, unknown>[];
-  title?: string;
-  isBorder?:boolean;
+  // title?: string;
+  isBorder?: boolean;
   filters?: { key: string; label: string; options: string[] }[];
   searchable?: boolean;
   filterable?: boolean;
+  title?: string | React.ReactNode;
+
   selectable?: boolean;
   actions?: (row: Record<string, unknown>) => React.ReactNode;
   onSelect?: (selectedRows: Record<string, unknown>[]) => void;
@@ -117,17 +130,30 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
         return "text-[#11224E]";
       case "opened":
         return "text-[#0CD767]";
+      case "active":
+        return "text-[#0CD767]";
+      case "inactive":
+        return "text-[#E28413]";
+      case "expired":
+        return "text-[#EA3232]";
+      case "failed":
+        return "text-[#EA3232]";
       default:
         return "text-[#11224E] ";
     }
   };
 
   return (
-    <span
-      className={`inline-flex bg-[#F6F6F6] items-center px-2 py-1.5 rounded-full text-[12px] font-normal ${getStatusStyles()}`}
-    >
-      {status}
-    </span>
+    <div className="relative">
+      {status === "New" && (
+        <div className="h-[6px] w-[6px] bg-[#F87B1B] border border-[#FFFFFF] rounded-full absolute top-0 left-0.5"></div>
+      )}
+      <span
+        className={`inline-flex bg-[#F6F6F6] items-center px-2 py-1.5 rounded-full text-[12px] font-normal ${getStatusStyles()}`}
+      >
+        {status}
+      </span>
+    </div>
   );
 };
 
@@ -145,23 +171,16 @@ const ImageCell: React.FC<{
       }`}
     >
       {imagePosition === "left" && (
-        <img
-          src={image}
-          alt={text}
-          className="w-4 h-4 rounded-full "
-        />
+        <img src={image} alt={text} className="w-7 rounded-full h-7  " />
       )}
       <span>{text}</span>
       {imagePosition === "right" && (
-        <img
-          src={image}
-          alt={text}
-          className="w-4 h-4  "
-        />
+        <img src={image} alt={text} className="w-4 h-4  " />
       )}
     </div>
   );
 };
+
 const ExceptionTable: React.FC<ExceptionTableProps> = ({
   columns,
   data,
@@ -217,7 +236,6 @@ const ExceptionTable: React.FC<ExceptionTableProps> = ({
     currentPage * rowsPerPage
   );
 
-
   const renderCell = (row: any, col: Column) => {
     const value = row[col.key];
 
@@ -236,27 +254,34 @@ const ExceptionTable: React.FC<ExceptionTableProps> = ({
         return (
           <a
             href={col.linkUrlKey ? row[col.linkUrlKey] : "#"}
-            className="text-blue-600 hover:underline flex items-center gap-2"
+            className="underline flex items-center gap-2"
           >
             {row[`${col.key}_image`] && (
               <img
                 src={row[`${col.key}_image`]}
                 alt={value}
-                className="w-6 h-6 rounded-full object-cover"
+                className="w-7 h-7 rounded-full "
               />
             )}
             {value}
           </a>
         );
 
+      // default:
+      //   return value;
       default:
-        return value;
+  return <TruncateTooltip>{String(value)}</TruncateTooltip>;
+
     }
   };
 
   return (
-    <div className={`bg-white  ${isBorder ? "border border-[#ECEDEE]" : ""}  rounded-xl relative`}>
-      <div className="flex flex-wrap items-center  mb-3 mt-6">
+    <div
+      className={`bg-white  ${
+        isBorder ? "border border-[#ECEDEE]" : ""
+      }  rounded-xl  relative`}
+    >
+      <div className="flex flex-wrap items-center mb-5">
         <div>
           <h2 className="body-1 font-medium text-[#111827]">{title}</h2>
         </div>
@@ -264,7 +289,7 @@ const ExceptionTable: React.FC<ExceptionTableProps> = ({
           {searchable && (
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Search here..."
               className="px-4 py-2 border border-gray-300 rounded-lg w-64 focus:ring-2 focus:ring-orange-500 outline-none"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -292,8 +317,8 @@ const ExceptionTable: React.FC<ExceptionTableProps> = ({
         </div>
       </div>
 
-      <div className="overflow-x-auto ">
-        <table className="min-w-full border-collapse ">
+      <div className="overflow-x-auto hide-scrollbar">
+        <table className="min-w-full border-collapse w-full  ">
           <thead>
             <tr className="bg-[#F2F2F2] rounded-lg text-left text-[12px] text-[#111827] uppercase">
               {selectable && (
@@ -308,11 +333,23 @@ const ExceptionTable: React.FC<ExceptionTableProps> = ({
                 </th>
               )}
               {columns.map((col) => (
-                <th key={col.key} className="p-3 font-normal">
+                <th
+                  key={col.key}
+                  className={`p-3 heading-7 font-normal text-[#111827] truncate`}
+                  style={
+                    col.width
+                      ? {
+                          width: col.width,
+                          minWidth: col.width,
+                          maxWidth: col.width,
+                        }
+                      : {}
+                  }
+                >
                   {col.label}
                 </th>
               ))}
-              {actions && <th className="p-3 font-normal heading-7">Action</th>}
+              {actions && <th className="p-4 heading-7 font-normal">Action</th>}
             </tr>
           </thead>
 
@@ -320,7 +357,7 @@ const ExceptionTable: React.FC<ExceptionTableProps> = ({
             {paginatedData.map((row, idx) => (
               <tr
                 key={idx}
-                className="hover:bg-gray-50 border-l text-[12px] font-normal text-[#414652] border-b border-[#cfd1d4]"
+                className="hover:bg-gray-50 text-[12px] font-normal text-[#414652] border-b border-gray-100"
               >
                 {selectable && (
                   <td className="p-4">
@@ -332,7 +369,19 @@ const ExceptionTable: React.FC<ExceptionTableProps> = ({
                 )}
 
                 {columns.map((col) => (
-                  <td key={col.key} className="p-4">
+                  <td
+                    key={col.key}
+                    className="p-3 truncate"
+                    style={
+                      col.width
+                        ? {
+                            width: col.width,
+                            minWidth: col.width,
+                            maxWidth: col.width,
+                          }
+                        : {}
+                    }
+                  >
                     {renderCell(row, col)}
                   </td>
                 ))}
@@ -351,7 +400,7 @@ const ExceptionTable: React.FC<ExceptionTableProps> = ({
           </tbody>
         </table>
       </div>
-
+            
       {!hidePagination && (
         <Pagination
           currentPage={currentPage}

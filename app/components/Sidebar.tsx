@@ -123,7 +123,11 @@ const Sidebar: React.FC<SidebarProps> = ({
                 width={160}
                 height={35}
                 alt="logo"
-                className={minimized && !isMobile ? "hidden" : undefined}
+                className={
+                  minimized && !isMobile
+                    ? "hidden cursor-pointer"
+                    : "cursor-pointer"
+                }
               />
               <button
                 aria-pressed={minimized}
@@ -212,7 +216,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
                 {openDropdowns.includes("essential") && (
                   <div className="flex flex-col mt-3 space-y-1">
-                    <NavLink href="/dashboard" minimized={minimized}  >
+                    <NavLink href="/dashboard" minimized={minimized}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -249,7 +253,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         Dashboard
                       </span>
                     </NavLink>
-                    <NavLink href="/people" minimized={minimized}  >
+                    <NavLink href="/people" minimized={minimized}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -328,7 +332,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                       </svg>
                       <span className={minimized ? "hidden" : ""}>Leads</span>
                     </NavLink>
-                    <NavLink href="/campaigns" minimized={minimized}  >
+                    <NavLink href="/campaigns" minimized={minimized}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"

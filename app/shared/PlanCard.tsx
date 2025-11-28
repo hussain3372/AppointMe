@@ -284,12 +284,12 @@ const PricingCard: React.FC<PricingCardProps> = ({
   buttonSpacing = "my-6",
   buttonClasses = "",
   hoverButtonBg = "bg-white", // Your hover color
-  hoverButtonText = "text-black",
+  hoverButtonText = "text-[#111827]",
 
   // Features defaults - UPDATED for black text
   featureSize = "text-[14px] leading-[20px]",
   featureWeight = "font-normal",
-  featureColor = "text-[#111827]", // Added black color
+  featureColor = "!text-[#111827]", // Added black color
   featureSpacing = "space-y-4", // Increased spacing
   featureClasses = "",
   showFeatureIcons = true,
@@ -477,7 +477,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
                   </div>
                 )
               )}
-              <span className="flex-1 whitespace-normal leading-relaxed heading-6 font-normal text-[#111827]">
+              <span className="flex-1 whitespace-normal leading-relaxed heading-6 font-normal">
                 {feature}
               </span>
             </li>

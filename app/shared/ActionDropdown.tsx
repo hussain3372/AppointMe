@@ -124,6 +124,7 @@ useEffect(() => {
         createPortal(
           <div
             ref={dropdownRef}
+            onClick={() => setOpen(false)}
             className="absolute z-[99] bg-white shadow-2xl rounded-lg w-28"
             style={{
               top: `${position.top}px`,

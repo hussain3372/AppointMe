@@ -121,7 +121,7 @@ const SubscriptionPlans: React.FC = () => {
 
   return (
     <div>
-      <div className="container mx-auto p-3 rounded-lg bg-[#F6F6F6] ">
+      <div className=" mx-auto p-3 rounded-lg bg-[#F6F6F6] ">
         <div className="flex flex-wrap items-center justify-between mb-6 gap-4">
           <h2 className="heading-4 font-medium text-[#333]">
             Subscription plans
@@ -171,12 +171,12 @@ const SubscriptionPlans: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 items-stretch">
           {plans.map((plan) => {
             const { price, percentage, period } = getPlanPrice(plan);
 
             return (
-              <div key={plan.title} className="flex flex-col h-full">
+              <div key={plan.title} className="flex flex-col h-full max-w-[370px] mx-auto">
                 <PricingCard
                   title={plan.title}
                   description={plan.description}
@@ -215,7 +215,7 @@ const SubscriptionPlans: React.FC = () => {
                     plan.isProfessionalPlan ? "text-gray-300" : "text-gray-600"
                   }
                   featureColor={
-                    plan.isProfessionalPlan ? "text-white" : "text-black"
+                    plan.isProfessionalPlan ? "text-white" : "text-[#111827]"
                   }
                   buttonBg={
                     plan.isProfessionalPlan ? "bg-white" : "bg-[#11224E]"

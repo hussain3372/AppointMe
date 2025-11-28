@@ -107,7 +107,7 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, drawerRef }) => {
                   </div>
                 </div>
               </div>
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3 mt-3 pb-3">
                 <PrimaryBtn
                 fontSize=""
                   label="Go back"

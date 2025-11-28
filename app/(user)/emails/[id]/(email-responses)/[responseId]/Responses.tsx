@@ -23,7 +23,7 @@ const Responses = () => {
         </Link>
         <Image src="/images/gap-img.svg" alt="gap" height={20} width={20} />
         <Link
-          href="/news-letter"
+          href="/emails/news-letter"
           className="heading-6 uppercase font-regular  text-[#70747D] hover:underline"
         >
           {/* <h6 className="heading-6 uppercase font-regular  text-[#70747D]"> */}

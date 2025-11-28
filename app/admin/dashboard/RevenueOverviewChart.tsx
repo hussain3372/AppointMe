@@ -137,7 +137,7 @@ const RevenueOverviewChart: React.FC<RevenueOverviewChartProps> = ({
               return context[0].label;
             },
             label: function (context) {
-               return "$" + context.parsed + " USD";
+               return "$" + context.parsed.y + " USD";
             },
           },
         },

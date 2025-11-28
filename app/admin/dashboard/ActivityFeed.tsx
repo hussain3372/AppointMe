@@ -7,6 +7,7 @@ const ActivityFeed: React.FC = () => {
   return (
     <div className="mt-5">
       <div>
+        
         <UserTable setIsDrawerOpen={() => console.log("opened")} />,
       </div>
     </div>

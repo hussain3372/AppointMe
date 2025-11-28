@@ -144,7 +144,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         ref={modalRef}
         className="bg-white rounded-xl max-w-md w-[89%] sm:w-full p-5 relative animate-fadeIn"
         onClick={(e) => e.stopPropagation()} // Prevent click from bubbling to overlay
-      > 
+      >
         {/* Icon */}
         <div className="flex items-center justify-center mb-5">
           {icon && (
@@ -158,8 +158,9 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         </h2>
 
         {/* Message */}
-        <p className="heading-7 font-normal w-full max-w-[250px] mx-auto  text-[#70747D] text-center mb-6 leading-relaxed" 
-        style={{ maxWidth: messageWidth || "250px" }}   
+        <p
+          className="heading-7 font-normal w-full max-w-[250px] mx-auto  text-[#70747D] text-center mb-6 leading-relaxed"
+          style={{ maxWidth: messageWidth || "250px" }}
         >
           {renderMessage()}
         </p>
@@ -196,25 +197,22 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         )}
 
         {/* Action Buttons */}
-        <div className="flex gap-3">
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-3">
           {cancelText && (
             <PrimaryBtn
-                            fontSize="12px"
-
+              fontSize="12px"
               variant="soft"
               label={cancelText}
-              width="100%"
               imageSrc="/images/back-arrow.svg"
               imagePosition="left"
               onClick={onClose}
             />
           )}
           <PrimaryBtn
-                          fontSize="12px"
-
+            fontSize="12px"
             variant="filled"
             label={confirmText}
-            width="100%"
             imageSrc="/images/filled-arrow.svg"
             imagePosition="right"
             onClick={() => {

@@ -1,12 +1,11 @@
 "use client";
 
-import { ChevronRight } from "lucide-react";
+import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-// import Tabs from "./Tabs";
 import StatusPills from "@/app/ui/StatusPills";
+import ActionDropdown from "@/app/shared/ActionDropdown";
 
-// Define activity card type
+// ------------ DATA ------------
 interface ActivityCard {
   id: number;
   icon: string;
@@ -18,11 +17,27 @@ interface ActivityCard {
   time: string;
 }
 
-const activityData: ActivityCard[] = [
+interface Meeting {
+  id: number;
+  title: string;
+  description: string;
+  time: string;
+  duration: string;
+  attendees: string;
+}
+
+interface AnnouncementsProps {
+  filterValues?: {
+    status: string;
+    date: string;
+  };
+}
+
+const announcementsData: ActivityCard[] = [
   {
     id: 1,
-    icon: "/images/rocket.png",
-    iconBg: "#E6F2FF",
+    icon: "/images/mic-published.svg",
+    iconBg: "#4FB3D21F",
     status: "green",
     statusLabel: "Published",
     title: "New leads follow-up",
@@ -33,85 +48,155 @@ const activityData: ActivityCard[] = [
     id: 2,
     icon: "/images/rocket-purple.png",
     iconBg: "#FFF0F6",
-    status: "orange",
+    status: "blue",
     statusLabel: "Scheduled",
     title: "New leads follow-up",
     description: "Your follow-up sequence will start tomorrow at 9:00 AM.",
-    time: "Yesterday",
+    time: "1 day ago",
   },
   {
     id: 3,
-    icon: "/images/rocket-orange.png",
+    icon: "/images/mic-draft.svg",
     iconBg: "#FFF9E6",
-    status: "blue",
+    status: "orange",
     statusLabel: "Draft",
     title: "New leads follow-up",
     description: "Your follow-up sequence will start tomorrow at 9:00 AM.",
-    time: "30 min ago",
+    time: "1 day ago",
   },
   {
     id: 4,
-    icon: "/images/rocket-green.png",
-    iconBg: "#53DE531F",
-    status: "orange",
+    icon: "/images/mic-published.svg",
+    iconBg: "#4FB3D21F",
+    status: "green",
     statusLabel: "Published",
     title: "New leads follow-up",
     description: "Your follow-up sequence will start tomorrow at 9:00 AM.",
-    time: "Yesterday",
+    time: "30 min ago",
   },
   {
     id: 5,
-    icon: "/images/rocket-yellow.png",
+    icon: "/images/mic-draft.svg",
     iconBg: "#E5D5211F",
-    status: "blue",
+    status: "orange",
     statusLabel: "Draft",
+    title: "New leads follow-up",
+    description: "Your follow-up sequence will start tomorrow at 9:00 AM.",
+    time: "1 day ago",
+  },
+  {
+    id: 6,
+    icon: "/images/mic-secdule.svg",
+    iconBg: "#4FB3D21F",
+    status: "blue",
+    statusLabel: "Scheduled",
+    title: "New leads follow-up",
+    description: "Your follow-up sequence will start tomorrow at 9:00 AM.",
+    time: "1 day ago",
+  },
+  {
+    id: 7,
+    icon: "/images/mic-secdule.svg",
+    iconBg: "#E861F41F",
+    status: "blue",
+    statusLabel: "Scheduled",
+    title: "New leads follow-up",
+    description: "Your follow-up sequence will start tomorrow at 9:00 AM.",
+    time: "1 day ago",
+  },
+  {
+    id: 8,
+    icon: "/images/mic-published.svg",
+    iconBg: "#4FB3D21F",
+    status: "green",
+    statusLabel: "Published",
     title: "New leads follow-up",
     description: "Your follow-up sequence will start tomorrow at 9:00 AM.",
     time: "30 min ago",
   },
   {
-    id: 6,
-    icon: "/images/rocket-blue.png",
-    iconBg: "#4FB3D21F",
-    status: "green",
-    statusLabel: "Scheduled",
+    id: 9,
+    icon: "/images/mic-draft.svg",
+    iconBg: "#E5D5211F",
+    status: "orange",
+    statusLabel: "Draft",
     title: "New leads follow-up",
     description: "Your follow-up sequence will start tomorrow at 9:00 AM.",
-    time: "30 min ago",
-  },
-    {
-    id: 6,
-    icon: "/images/rocket-blue.png",
-    iconBg: "#4FB3D21F",
-    status: "green",
-    statusLabel: "Scheduled",
-    title: "New leads follow-up",
-    description: "Your follow-up sequence will start tomorrow at 9:00 AM.",
-    time: "30 min ago",
-  },
-    {
-    id: 6,
-    icon: "/images/rocket-blue.png",
-    iconBg: "#4FB3D21F",
-    status: "green",
-    statusLabel: "Scheduled",
-    title: "New leads follow-up",
-    description: "Your follow-up sequence will start tomorrow at 9:00 AM.",
-    time: "30 min ago",
+    time: "1 day ago",
   },
 ];
 
-const Announcements: React.FC = () => {
+const meetingActions = (meeting: Meeting) => (
+  <ul className="py-1 text-sm text-gray-700">
+    <li>
+      <button className="w-full text-left px-4 py-2 hover:bg-gray-100">
+        View
+      </button>
+    </li>
+    <li>
+      <button className="w-full text-left px-4 py-2 hover:bg-gray-100">
+        Edit
+      </button>
+    </li>
+    <li>
+      <button className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-500">
+        Delete
+      </button>
+    </li>
+  </ul>
+);
+
+const Announcements: React.FC<AnnouncementsProps> = ({
+  filterValues = { status: "", date: "" },
+}) => {
+  // -------- FILTER LOGIC --------
+  const filteredData = announcementsData.filter((item) => {
+    // Status filter logic
+    const matchStatus = (() => {
+      switch (filterValues.status) {
+        case "Draft":
+          return item.statusLabel === "Draft";
+        case "Scheduled":
+          return item.statusLabel === "Scheduled";
+        case "Published":
+          return item.statusLabel === "Published";
+        case "All":
+        case "":
+          return true;
+        default:
+          return item.statusLabel === filterValues.status;
+      }
+    })();
+
+    // Date filter logic
+    const matchDate = (() => {
+      switch (filterValues.date) {
+        case "1 day ago":
+          return item.time.includes("1 day ago");
+        case "30 min ago":
+          return item.time.includes("30 min ago");
+        case "All":
+        case "":
+          return true;
+        default:
+          return true;
+      }
+    })();
+
+    return matchStatus && matchDate;
+  });
+
   return (
-    <div className="mt-5">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 rounded-lg bg-[#EEEEEE66] p-4 ">
-        {activityData.map((card) => (
+    <div className="sm:mb-[148px] mb-5">
+      {/* -------- CARDS GRID -------- */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 rounded-lg bg-[#EEEEEE66] p-4">
+        {filteredData.map((card) => (
           <div
             key={card.id}
             className="bg-white rounded-lg shadow-sm p-3 flex flex-col justify-between"
           >
+            {/* Top Row */}
             <div className="flex justify-between items-start mb-5">
-              {/* Icon with colored bg */}
               <div
                 className="p-2 rounded-lg flex items-center justify-center"
                 style={{ backgroundColor: card.iconBg }}
@@ -121,35 +206,27 @@ const Announcements: React.FC = () => {
                   alt="activity icon"
                   width={20}
                   height={20}
-                  className="object-contain"
                 />
               </div>
 
-              {/* Status pill */}
               <StatusPills label={card.statusLabel} variant={card.status} />
             </div>
 
-            {/* Title and description */}
-            <div className=" mb-5">
+            {/* Title + Description */}
+            <div className="mb-5">
               <h3 className="font-medium body-3 text-[#111827] mb-1">
                 {card.title}
               </h3>
-              <p className="text-[#A0A3A9] font-normal heading-7 ">
+              <p className="text-[#A0A3A9] font-normal heading-7">
                 {card.description}
               </p>
             </div>
 
-            {/* Timestamp */}
-            {/* Bottom row: link on left, time on right */}
+            {/* Bottom Row */}
             <div className="flex items-center justify-between text-xs mt-auto">
-              <Link
-                href="/leads"
-                className="text-[#111827] body-5 font-normal flex items-center gap-1 hover:text-[#111827] transition-colors"
-              >
-                View details
-                <ChevronRight size={14} />
-              </Link>
-              <p className="text-gray-400">{card.time}</p>
+              <p className="text-[#A0A3A9] font-normal body-5">{card.time}</p>
+
+              <ActionDropdown row={card} actions={meetingActions} />
             </div>
           </div>
         ))}

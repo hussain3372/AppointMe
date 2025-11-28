@@ -445,32 +445,23 @@ const DrawerTable = ({
           filterable={true}
           selectable={true}
           onSelect={handleSelect}
-          bottomActions={[
-            {
-              label: "Send to all selected",
-              onClick: handleAddToCampaign,
-            },
-            {
-              label: "Delete leads",
-              onClick: handleDeleteLeads,
-            },
-          ]}
+         bottomActions={false}  
           showSelectionCount={true}
           actionsType="inline"
           actions={(row) => (
             <div className="flex">
               <button
-                className="cursor-pointer bg-[#FFFFFF] border border-[#F6F6F6] custom-shadow p-2 rounded-lg"
+                className="cursor-pointer bg-[#FFFFFF] border border-[#F6F6F6] custom-shadow p-1 rounded-lg"
                 onClick={() => handleAddToCampaign()}
               >
                 <Image
                   src="/images/mail-plus-black.svg"
                   alt="Edit"
-                  width={36}
-                  height={36}
+                  width={16}
+                  height={16}
                 />
               </button>
-              <button className="cursor-pointer bg-[#FFFFFF] border border-[#F6F6F6] custom-shadow p-2 rounded-lg">
+              <button className="cursor-pointer bg-[#FFFFFF] border border-[#F6F6F6] custom-shadow p-1 rounded-lg">
                 <Image
                   src="/images/calender-down.svg"
                   alt="Edit"
@@ -479,7 +470,7 @@ const DrawerTable = ({
                 />
               </button>
               <button
-                className="cursor-pointer bg-[#FFFFFF] border border-[#F6F6F6] custom-shadow p-2 rounded-lg"
+                className="cursor-pointer bg-[#FFFFFF] border border-[#F6F6F6] custom-shadow p-1 rounded-lg"
                 onClick={() => handleDeleteLeads([row])}
               >
                 <Image

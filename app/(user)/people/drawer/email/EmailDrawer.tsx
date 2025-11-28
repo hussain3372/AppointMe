@@ -1,6 +1,5 @@
 import LightBtn from '@/app/ui/buttons/LightButton'
 import PrimaryBtn from '@/app/ui/buttons/PrimaryBtn'
-import Image from 'next/image'
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import EmailStep1 from './EmailStep1'

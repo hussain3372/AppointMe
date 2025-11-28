@@ -192,7 +192,7 @@ export default function TwoFaDrawer({ onClose }: { onClose: () => void }) {
 
       {/* Buttons Fixed at Bottom */}
       <div className="p-5 bg-white">
-        <div className="flex gap-3 w-full">
+        <div className="flex flex-col sm:flex-row gap-3 mt-3 pb-3">
           {stepCount === 1 ? (
             <>
               <LightBtn
@@ -202,7 +202,7 @@ export default function TwoFaDrawer({ onClose }: { onClose: () => void }) {
                 imagePosition="left"
               />
               <PrimaryBtn
-              fontSize="12px"
+                fontSize="12px"
                 label="Send OTP"
                 onClick={handleSendOtp}
                 imageSrc="/images/arrow-right.svg"
@@ -218,7 +218,7 @@ export default function TwoFaDrawer({ onClose }: { onClose: () => void }) {
                 imagePosition="left"
               />
               <PrimaryBtn
-              fontSize="12px"
+                fontSize="12px"
                 label="Verify"
                 onClick={handleVerifyOtp}
                 imageSrc="/images/arrow-right.svg"

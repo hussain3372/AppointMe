@@ -141,7 +141,7 @@ export default function Step3() {
             </p>
           )}
 
-          <div className="mt-3 flex gap-2">
+<div className="mt-3 flex flex-wrap gap-2 sm:flex-nowrap">
             <div className="bg-[#FEF4ED] w-full flex p-3 gap-3">
               <div className="bg-white custom-shadow p-2 rounded-lg">
                 <Image
@@ -233,32 +233,41 @@ export default function Step3() {
           </div>
         </div>
         <div className="bg-white p-3 mt-3 rounded-lg custom-shadow">
-          <div className="flex items-center cursor-pointer gap-3 p-3 bg-[#ECFDF2] border border-transparent hover:border-[#f8a86f] rounded-lg shadow-[0_0_0_1px_rgba(255,255,255,0.10) inset]">
-            <div className="bg-white custom-shadow rounded-lg p-3">
-              <Image
-                src="/images/template.svg"
-                width={24}
-                height={24}
-                alt="check"
-              />
-            </div>
-            <div className="flex justify-between w-full items-start">
-              <div className="space-y-1">
-                <h2 className="heading-5 text-[#111827]">Welcome email</h2>
-                <p className="body-4 text-[#70747D] max-w-[420px]">
-                  You are completely free to keep this template as your email
-                  template or cancel this template and select a new one.
-                </p>
-              </div>
-              <Image
-                src="/images/file-search.svg"
-                alt="Search file"
-                width={24}
-                height={24}
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-2 pt-5">
+        <div className="flex flex-wrap sm:flex-nowrap items-start cursor-pointer gap-3 p-3 bg-[#ECFDF2] border border-transparent hover:border-[#f8a86f] rounded-lg shadow-[0_0_0_1px_rgba(255,255,255,0.10)_inset]">
+  
+  <div className="bg-white custom-shadow rounded-lg p-3">
+    <Image
+      src="/images/template.svg"
+      width={24}
+      height={24}
+      alt="check"
+    />
+  </div>
+
+  <div className="flex flex-wrap sm:flex-nowrap justify-between w-full items-start gap-3">
+    
+    <div className="space-y-1 w-full">
+      <h2 className="heading-5 text-[#111827]">Welcome email</h2>
+      <p className="body-4 text-[#70747D] max-w-[420px]">
+        You are completely free to keep this template as your email
+        template or cancel this template and select a new one.
+      </p>
+    </div>
+
+    {/* RIGHT SIDE ICON (hidden on small screens) */}
+    <Image
+      src="/images/file-search.svg"
+      alt="Search file"
+      width={24}
+      height={24}
+      className="hidden lg:block sm:ml-auto"
+    />
+
+  </div>
+
+</div>
+
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-5">
             {emailData.map((item) => (
               <div key={item.id} className="bg-[#FEF4ED] rounded-lg p-3">
                 <div className="flex gap-3 items-center">

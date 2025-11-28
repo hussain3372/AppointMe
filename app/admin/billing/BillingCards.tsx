@@ -295,7 +295,7 @@ const SubscriptionCards: React.FC = () => {
 
   return (
     <div>
-      <div className="container mx-auto p-3 rounded-lg bg-[#F6F6F6]">
+      <div className=" mx-auto p-3 rounded-lg bg-[#F6F6F6]">
         <div className="flex w-full justify-between items-center flex-col sm:flex-row">
           <div className="flex flex-col items-start mb-6 gap-4">
             <motion.h2 
@@ -377,7 +377,7 @@ const SubscriptionCards: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-3 items-stretch"
           >
             {plans.map((plan, index) => {
               const { price, percentage } = getPlanPrice(plan);
@@ -388,7 +388,7 @@ const SubscriptionCards: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1, duration: 0.3 }}
-                  className="flex flex-col h-full"
+                  className="flex flex-col h-full mx-auto max-w-[370px]"
                 >
                   <PricingCard
                     title={plan.title}
@@ -408,7 +408,7 @@ const SubscriptionCards: React.FC = () => {
                     descriptionColor={"text-[#70747D]"}
                     priceColor={"text-[#111827]"}
                     periodColor={"text-gray-600"}
-                    featureColor={"text-black"}
+                    featureColor={"text-[#111827]"}
                     buttonBg={"bg-[#11224E1F] flex items-center"}
                     buttonTextColor={"text-[#11224E] heading-7"}
                     enableHoverEffects={false}

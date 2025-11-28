@@ -455,7 +455,7 @@ const LeadsTable = ({
           filterable={true}
           selectable={true}
           onSelect={handleSelect}
-          actionColClassName="p-1" // override here
+          actionColClassName="p-1" 
           bottomActions={[
             {
               label: "Add to campaign",

@@ -5,6 +5,7 @@ import NavLink from "./NavLink";
 import { usePathname } from "next/navigation";
 import ConfirmationModal from "@/app/shared/ConfirmationModal";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface SidebarProps {
   onClose?: () => void;
@@ -118,13 +119,19 @@ const Sidebar: React.FC<SidebarProps> = ({
           <div className="w-full">
             {/* Logo Section */}
             <div className="flex items-center justify-between w-full">
-              <Image
-                src="/images/full-logo.svg"
-                width={160}
-                height={35}
-                alt="logo"
-                className={minimized && !isMobile ? "hidden" : undefined}
-              />
+               <Link href="/admin/dashboard">
+                <Image
+                  src="/images/full-logo.svg"
+                  width={160}
+                  height={35}
+                  alt="logo"
+                  className={
+                    minimized && !isMobile
+                      ? "hidden cursor-pointer"
+                      : "cursor-pointer"
+                  }
+                />
+                </Link>
               <button
                 aria-pressed={minimized}
                 aria-label={
@@ -163,7 +170,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <input
                   ref={inputRef}
                   type="text"
-                  placeholder="Search here..."
+                  placeholder="Search here.."
                   className={`py-2 pl-4 pr-8 flex items-center outline-none rounded-full bg-[#FFFFFF99] shadow-[0_6px_8px_0_rgba(0,0,0,0.12)] backdrop-blur-[20px] text-[14px] font-normal leading-5 ${
                     minimized ? "hidden" : ""
                   }`}
@@ -212,7 +219,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
                 {openDropdowns.includes("essential") && (
                   <div className="flex flex-col mt-3 space-y-1">
-                    <NavLink href="/admin/dashboard" minimized={minimized}>
+                    <NavLink onNavigate={onClose} href="/admin/dashboard" minimized={minimized}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -291,10 +298,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                 {openDropdowns.includes("engage") && (
                   <div
                     className={`flex flex-col ${
-                      minimized ? "mt-0" : "mt-3"
+                      minimized ? "mt-1" : "mt-3"
                     } space-y-1`}
                   >
-                    <NavLink
+                    <NavLink onNavigate={onClose}
                       href="/admin/user-management"
                       minimized={minimized}
                     >
@@ -316,7 +323,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         User management
                       </span>
                     </NavLink>
-                    <NavLink
+                    <NavLink onNavigate={onClose}
                       href="/admin/campaign-management"
                       minimized={minimized}
                     >
@@ -338,7 +345,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         Campaign management
                       </span>
                     </NavLink>
-                    <NavLink
+                    <NavLink onNavigate={onClose}
                       href="/admin/email-management"
                       minimized={minimized}
                     >
@@ -360,7 +367,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         Email management
                       </span>
                     </NavLink>
-                    <NavLink href="/admin/reports" minimized={minimized}>
+                    <NavLink onNavigate={onClose} href="/admin/reports" minimized={minimized}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -379,7 +386,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         Reports & analytics
                       </span>
                     </NavLink>
-                    <NavLink href="/admin/billing" minimized={minimized}>
+                    <NavLink onNavigate={onClose} href="/admin/billing" minimized={minimized}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -406,7 +413,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
           <div className="w-full">
             <div className="flex flex-col mt-3 space-y-1">
-              <NavLink href="/admin/settings" minimized={minimized}>
+              <NavLink onNavigate={onClose} href="/admin/settings" minimized={minimized}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"

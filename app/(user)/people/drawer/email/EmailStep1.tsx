@@ -5,7 +5,7 @@ export default function EmailStep1() {
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null)
 
   return (
-    <div>
+    <div >
       <div className="flex justify-between items-center mb-1">
         <h2 className="heading-4 font-medium text-[#111827]">
           Select email template

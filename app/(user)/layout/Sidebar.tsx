@@ -5,7 +5,7 @@ import NavLink from "./NavLink";
 import { usePathname } from "next/navigation";
 import ConfirmationModal from "@/app/shared/ConfirmationModal";
 import { useRouter } from "next/navigation";
-
+import Link from "next/link";
 interface SidebarProps {
   onClose?: () => void;
   isMobile: boolean;
@@ -29,8 +29,8 @@ const Sidebar: React.FC<SidebarProps> = ({
     "engage",
   ]);
   const [minimizedState, setMinimized] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  // const [isCollapsed, setIsCollapsed] = useState(false);
+  // const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
   const minimized =
     typeof minimizedProp === "boolean" ? minimizedProp : minimizedState;
@@ -118,6 +118,8 @@ const Sidebar: React.FC<SidebarProps> = ({
           <div className="w-full">
             {/* Logo Section */}
             <div className="flex items-center justify-between w-full">
+                            <Link href="/">
+
               <Image
                 src="/images/full-logo.svg"
                 width={160}
@@ -125,6 +127,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 alt="logo"
                 className={minimized && !isMobile ? "hidden" : undefined}
               />
+              </Link>
               <button
                 aria-pressed={minimized}
                 aria-label={
@@ -212,7 +215,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
                 {openDropdowns.includes("essential") && (
                   <div className="flex flex-col mt-3 space-y-1">
-                    <NavLink href="/dashboard" minimized={minimized}>
+                    <NavLink onNavigate={onClose} href="/dashboard" minimized={minimized}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -249,7 +252,8 @@ const Sidebar: React.FC<SidebarProps> = ({
                         Dashboard
                       </span>
                     </NavLink>
-                    <NavLink href="/people" minimized={minimized}>
+                    
+                    <NavLink onNavigate={onClose} href="/people" minimized={minimized}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -273,7 +277,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               {/* Engage Dropdown */}
               <div>
                 <button
-                  onClick={() => toggleDropdown("engage")}
+                  onClick={() => toggleDropdown("engage")}  
                   className={
                     "flex items-center justify-between w-full cursor-pointer transition " +
                     (minimized ? "px-0 hidden" : "block")
@@ -308,10 +312,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                 {openDropdowns.includes("engage") && (
                   <div
                     className={`flex flex-col ${
-                      minimized ? "mt-0" : "mt-3"
+                      minimized ? "mt-1" : "mt-3"
                     } space-y-1`}
                   >
-                    <NavLink href="/leads" minimized={minimized}>
+                    <NavLink onNavigate={onClose} href="/leads" minimized={minimized}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -328,7 +332,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                       </svg>
                       <span className={minimized ? "hidden" : ""}>Leads</span>
                     </NavLink>
-                    <NavLink href="/campaigns" minimized={minimized}>
+                    <NavLink onNavigate={onClose} href="/campaigns" minimized={minimized}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -347,7 +351,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         Campaigns
                       </span>
                     </NavLink>
-                    <NavLink href="/ai-outreach" minimized={minimized}>
+                    <NavLink onNavigate={onClose} href="/ai-outreach" minimized={minimized}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -366,7 +370,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         AI outreach
                       </span>
                     </NavLink>
-                    <NavLink href="/emails" minimized={minimized}>
+                    <NavLink onNavigate={onClose} href="/emails" minimized={minimized}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -383,7 +387,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                       </svg>
                       <span className={minimized ? "hidden" : ""}>Emails</span>
                     </NavLink>
-                    <NavLink href="/meetings" minimized={minimized}>
+                    <NavLink onNavigate={onClose} href="/meetings" minimized={minimized}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -410,7 +414,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
           <div className="w-full">
             <div className="flex flex-col mt-3 space-y-1">
-              <NavLink href="/settings" minimized={minimized}>
+              <NavLink onNavigate={onClose} href="/settings" minimized={minimized}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -486,7 +490,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <span className={minimized ? "hidden" : ""}>Logout</span>
               </button>
             </div>
-          </div>
+          </div>  
         </div>
       </div>
 

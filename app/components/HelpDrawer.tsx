@@ -107,9 +107,9 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, drawerRef }) => {
                   </div>
                 </div>
               </div>
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3 mt-3 pb-3">
                 <PrimaryBtn
-                fontSize="12px"
+                  fontSize="12px"
                   label="Go back"
                   imageSrc="/images/arrow-left.svg"
                   imagePosition="left"
@@ -117,8 +117,7 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, drawerRef }) => {
                   variant="soft"
                 />
                 <PrimaryBtn
-                                fontSize="12px"
-
+                  fontSize="12px"
                   label="Report issue"
                   imageSrc="/images/arrow-right.svg"
                   imagePosition="right"

@@ -458,36 +458,36 @@ const DrawerTable = ({
           actionsType="inline"
           actions={(row) => (
             <div className="flex">
-              <button
-                className="cursor-pointer"
-                onClick={() => handleAddToCampaign([row])}
-              >
-                <Image
-                  src="/images/action1.svg"
-                  alt="Edit"
-                  width={40}
-                  height={40}
-                />
-              </button>
-              <button className="cursor-pointer">
-                <Image
-                  src="/images/action2.svg"
-                  alt="Edit"
-                  width={40}
-                  height={40}
-                />
-              </button>
-              <button
-                className="cursor-pointer"
-                onClick={() => handleDeleteLeads([row])}
-              >
-                <Image
-                  src="/images/action3.svg"
-                  alt="Edit"
-                  width={40}
-                  height={40}
-                />
-              </button>
+               <button
+                              className="cursor-pointer bg-[#FFFFFF] border border-[#F6F6F6] custom-shadow p-1 rounded-lg"
+                              onClick={() => handleAddToCampaign([row])}
+                            >
+                              <Image
+                                src="/images/mail-plus-black.svg"
+                                alt="Edit"
+                                width={16}
+                                height={16}
+                              />
+                            </button>
+                            <button className="cursor-pointer bg-[#FFFFFF] border border-[#F6F6F6] custom-shadow p-1 rounded-lg">
+                              <Image
+                                src="/images/calender-down.svg"
+                                alt="Edit"
+                                width={16}
+                                height={16}
+                              />
+                            </button>
+                            <button
+                              className="cursor-pointer bg-[#FFFFFF] border border-[#F6F6F6] custom-shadow p-1 rounded-lg"
+                              onClick={() => handleDeleteLeads([row])}
+                            >
+                              <Image
+                                src="/images/delete.svg"
+                                alt="Edit"
+                                width={16}
+                                height={16}
+                              />
+                            </button>
             </div>
           )}
         />

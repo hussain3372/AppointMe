@@ -29,7 +29,7 @@ export default function EmailStep1() {
           />
           <input
             type="text"
-            placeholder="Search here..."
+            placeholder="Search "
             className="py-2 pr-2 pl-8 flex w-full items-center outline-none rounded-lg bg-white border border-[#11182714] text-[14px] font-normal leading-5"
           />
         </div>

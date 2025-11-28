@@ -218,37 +218,39 @@ const Step2 = () => {
       <div className="space-y-6">
         <h1 className="font-medium body-3 text-[#111827]">Schedule</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-       {/* Date Picker */}
-<div className="relative">
-  <div onClick={handleDateInputClick} className="cursor-pointer">
-    <Input
-      title="Start date"
-      placeholder="Choose date"
-      className="w-full cursor-pointer placeholder:text-[#414652]"
-      value={startDate ? startDate.toLocaleDateString() : ""}
-      readOnly
-    />
-  </div>
-  <DatePicker
-    ref={datePickerRef}
-    selected={startDate}
-    onChange={(date) => setStartDate(date)}
-    dateFormat="MM/dd/yyyy"
-    placeholderText="Enter Start date"
-    showMonthDropdown
-    showYearDropdown
-    dropdownMode="select"
-    className="absolute top-0 left-0 w-full h-full opacity-0 z-10 cursor-pointer"
-    wrapperClassName="absolute top-0 left-0 w-full h-full z-10"
-  />
-  <Image
-    src="/images/calender.svg"
-    alt="Select date"
-    height={20}
-    width={20}
-    className="absolute top-3 right-3 pointer-events-none z-20"
-  />
-</div>
+          {/* Date Picker */}
+          <div className="relative">
+            <div onClick={handleDateInputClick} className="cursor-pointer">
+              <Input
+                title="Start date"
+                placeholder="Choose date"
+                className="w-full cursor-pointer placeholder:text-[#414652]"
+                value={startDate ? startDate.toLocaleDateString() : ""}
+                readOnly
+              />
+            </div>
+            <DatePicker
+              ref={datePickerRef}
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              dateFormat="MM/dd/yyyy"
+              placeholderText="Enter Start date"
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              popperPlacement="top-start"
+              className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+              wrapperClassName="absolute top-0 left-0 w-full"
+              calendarClassName="!z-[9999]"
+            />
+            <Image
+              src="/images/calender.svg"
+              alt="Select date"
+              height={20}
+              width={20}
+              className="absolute top-3 right-3 pointer-events-none z-20"
+            />
+          </div>
           {/* Time Picker */}
           <div className="relative">
             <div className="cursor-pointer relative z-10">

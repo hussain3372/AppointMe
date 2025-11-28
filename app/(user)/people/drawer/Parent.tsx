@@ -19,7 +19,8 @@ export default function Parent({ onLaunchCampaign }: ParentProps) {
     {
       id: 1,
       title: "Campaign setup",
-      description: "Set up your campaign name, objectives, and basic configuration",
+      description:
+        "Set up your campaign name, objectives, and basic configuration",
     },
     {
       id: 2,
@@ -49,19 +50,8 @@ export default function Parent({ onLaunchCampaign }: ParentProps) {
       setCurrentStep(currentStep - 1);
     }
   };
-  // const handleLaunchCampaign = () => {
-  //   setIsConfirmationModalOpen(false);
-  //   // Any additional logic on confirm
-  //   console.log("Campaign launched!");
-  // };
 
-
-  // // Handle cancel launch
-  // const handleCancelLaunch = () => {
-  //   setIsConfirmationModalOpen(false);
-  //   // You can add any additional cancel logic here
-  // };
- const getStepState = (stepId: number) => {
+  const getStepState = (stepId: number) => {
     if (stepId < currentStep) return "completed";
     if (stepId === currentStep) return "active";
     return "pending";
@@ -134,7 +124,7 @@ export default function Parent({ onLaunchCampaign }: ParentProps) {
             transition={{ duration: 0.3, ease: "easeOut" }}
             className=" "
           >
-            <Step3/>
+            <Step3 />
           </motion.div>
         );
       default:
@@ -143,75 +133,82 @@ export default function Parent({ onLaunchCampaign }: ParentProps) {
   };
 
   return (
-    <div className="flex flex-col w-full h-screen py-5 px-5 ">
-      {/* Header Section */}
-      <div className="space-y-8">
-        <motion.div
-          className="space-y-1"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <p className="body-1 font-medium text-[#111827]">Add new campaign</p>
-          <p className="body-4 font-regular text-[#70747D] max-w-[540px]">
-            Create and launch a new campaign to reach your leads with
-            personalized AI-powered emails.
-          </p>
-        </motion.div>
+    <div className="flex flex-col justify-between h-full py-5 px-5">
+      {/* Top Content Section */}
+      <div>
+        {/* Header Section */}
+        <div className="space-y-8">
+          <motion.div
+            className="space-y-1"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <p className="body-1 font-medium text-[#111827]">
+              Add new campaign
+            </p>
+            <p className="body-4 font-regular text-[#70747D] max-w-[540px]">
+              Create and launch a new campaign to reach your leads with
+              personalized AI-powered emails.
+            </p>
+          </motion.div>
 
-        {/* Progress Steps */}
-        <div className="flex justify-between items-center gap-5 pr-5">
-          {steps.map((step, index) => {
-            const styles = getStepStyles(step.id);
-            const isLastStep = index === steps.length - 1;
-            const state = getStepState(step.id);
+          {/* Progress Steps */}
+          <div className="flex justify-between items-center gap-5 pr-5">
+            {steps.map((step, index) => {
+              const styles = getStepStyles(step.id);
+              const isLastStep = index === steps.length - 1;
+              const state = getStepState(step.id);
 
-            return (
-              <React.Fragment key={step.id}>
-                <div className="flex flex-col items-center gap-3 flex-1">
-                  <motion.div
-                    className={`rounded-full ${styles.bg} w-[30px] h-[30px] border-[6px] ${styles.border}`}
-                    initial={{ scale: 1 }}
-                    animate={
-                      state === "active" ? { scale: [1, 1.1, 1] } : { scale: 1 }
-                    }
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                  />
-                  <motion.p
-                    className={`heading-7 font-medium w-[124%] text-center ${styles.textColor}`}
-                    initial={{ opacity: 0.7 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {step.title}
-                  </motion.p>
-                </div>
-                {!isLastStep && (
-                  <div className="h-0.5 w-full bg-[#E2E3E5] relative overflow-hidden">
-                    {step.id < currentStep && (
-                      <motion.div
-                        className="h-full bg-[#11224E] absolute top-0 left-0"
-                        initial={{ width: 0 }}
-                        animate={{ width: "100%" }}
-                        transition={{ duration: 0.5, ease: "easeOut" }}
-                      />
-                    )}
+              return (
+                <React.Fragment key={step.id}>
+                  <div className="flex flex-col items-center gap-3 flex-1">
+                    <motion.div
+                      className={`rounded-full ${styles.bg} w-[30px] h-[30px] border-[6px] ${styles.border}`}
+                      initial={{ scale: 1 }}
+                      animate={
+                        state === "active"
+                          ? { scale: [1, 1.1, 1] }
+                          : { scale: 1 }
+                      }
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                    />
+                    <motion.p
+                      className={`heading-7 font-medium w-[124%] text-center ${styles.textColor}`}
+                      initial={{ opacity: 0.7 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {step.title}
+                    </motion.p>
                   </div>
-                )}
-              </React.Fragment>
-            );
-          })}
+                  {!isLastStep && (
+                    <div className="h-0.5 w-full bg-[#E2E3E5] relative overflow-hidden">
+                      {step.id < currentStep && (
+                        <motion.div
+                          className="h-full bg-[#11224E] absolute top-0 left-0"
+                          initial={{ width: 0 }}
+                          animate={{ width: "100%" }}
+                          transition={{ duration: 0.5, ease: "easeOut" }}
+                        />
+                      )}
+                    </div>
+                  )}
+                </React.Fragment>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Content Area */}
+        <div className="flex flex-col justify-center max-w-2xl mx-auto w-full">
+          <AnimatePresence mode="wait">{renderStepContent()}</AnimatePresence>
         </div>
       </div>
 
-      {/* Content Area */}
-      <div className=" flex flex-col justify-center max-w-2xl mx-auto w-full">
-        <AnimatePresence mode="wait">{renderStepContent()}</AnimatePresence>
-      </div>
-
-      {/* Buttons Section */}
-      <motion.div 
-        className="flex gap-3 pt-6 pr-5 pb-5"
+      {/* Buttons Section - Fixed at Bottom */}
+      <motion.div
+        className="flex gap-3 mt-5 pb-5 pr-5  flex-col sm:flex-row"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -224,7 +221,7 @@ export default function Parent({ onLaunchCampaign }: ParentProps) {
           disabled={currentStep === 1}
         />
         <PrimaryBtn
-          fontSize='12px'
+          fontSize="12px"
           label={currentStep === 3 ? "Launch Campaign" : "Next"}
           imagePosition="right"
           imageSrc="/images/arrow-right.svg"

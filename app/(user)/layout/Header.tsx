@@ -373,7 +373,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, isMobile }) => {
         <div className="flex items-center gap-3">
           <div className="rounded-full hidden sm:flex  items-center gap-2 p-3 bg-[#FEF4ED] border border-[#FEE5D1]">
             <Image
-              src="/images/warning.svg"
+              src="/images/triangle-alert.svg"
               alt="warning"
               height={20}
               width={20}

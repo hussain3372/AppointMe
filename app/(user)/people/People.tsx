@@ -211,7 +211,7 @@ const People = () => {
   };
 
   return (
-    <div className="relative space-y-5">
+    <div className="relative ">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between">
         <div className="space-y-2">

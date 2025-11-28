@@ -370,7 +370,7 @@ const getYAxisLabels = (): string[] => {
                 preserveAspectRatio="xMidYMid meet"
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
-                style={{ cursor: "default" }}
+                style={{ cursor: "default", width:"138%"}}
               >
                 {dotData.map((dot, idx) => {
                   const centerX = dot.col * (dotWidth + gapX) + dotWidth / 2;

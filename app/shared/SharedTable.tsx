@@ -290,7 +290,7 @@ const SharedTable: React.FC<SharedTableProps> = ({
           {searchable && (
             <input
               type="text"
-              placeholder="Search here..."
+              placeholder="Search"
               className="px-4 py-2 border border-gray-300 rounded-lg w-64 focus:ring-2 focus:ring-orange-500 outline-none"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -411,10 +411,10 @@ const SharedTable: React.FC<SharedTableProps> = ({
       )}
       {/* Bottom Action Bar */}
       {selectedRows.length > 0 && bottomActions !== false && (
-        <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-[#11224E] text-white rounded-sm p-3 flex items-center gap-3 z-50">
+        <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-[#11224E] text-white rounded-sm sm:p-3 p-3 flex items-center sm:gap-3 gap-1 whitespace-nowrap z-50">
           {showSelectionCount && (
             <>
-              <span className="font-medium text-[#FFFFFFCC] text-[12px]">
+              <span className="font-medium    sm:text-[12px] text-[10px]">
                 {selectedRows.length} selected
               </span>
               <div className="w-px h-3 bg-gray-600"></div>
@@ -428,13 +428,13 @@ const SharedTable: React.FC<SharedTableProps> = ({
                   onClick={() => action.onClick(selectedRows)}
                   className={
                     action.className ||
-                    "hover:text-orange-400 transition-colors text-[12px]"
+                    "hover:text-orange-400 transition-colors sm:text-[12px] text-[10px] sm:font-medium font-normal"
                   }
                 >
                   {action.label}
                 </button>
                 {i < bottomActions.length - 1 && (
-                  <div className="w-px h-3 bg-gray-600"></div>
+                  <div className="w-px h-3 bg-gray-600 sm:font-medium font-normal sm:text-[12px] text-[10px] "></div>
                 )}
               </React.Fragment>
             ))}

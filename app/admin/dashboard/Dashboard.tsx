@@ -28,7 +28,7 @@ const Dashboard = () => {
               />
             </div>
             <Link
-              href="/campaigns"
+              href="/admin/user-management"
               className="text-[#70747D] body-5 font-normal flex items-center gap-1"
             >
               View details
@@ -53,7 +53,7 @@ const Dashboard = () => {
               />
             </div>
             <Link
-              href="/emails"
+              href="/admin/user-management"
               className="text-[#70747D] body-5 font-normal flex items-center gap-1"
             >
               View details
@@ -78,7 +78,7 @@ const Dashboard = () => {
               />
             </div>
             <Link
-              href="/leads"
+              href="/admin/campaign-management"
               className="text-[#70747D] body-5 font-normal flex items-center gap-1"
             >
               View details
@@ -105,7 +105,7 @@ const Dashboard = () => {
               />
             </div>
             <Link
-              href="/meetings"
+              href="/admin/email-management"
               className="text-[#70747D] body-5 font-normal flex items-center gap-1"
             >
               View details
@@ -130,7 +130,7 @@ const Dashboard = () => {
               />
             </div>
             <Link
-              href="/campaigns"
+              href="/admin/email-management"
               className="text-[#70747D] body-5 font-normal flex items-center gap-1"
             >
               View details

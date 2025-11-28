@@ -435,16 +435,17 @@ const LeadsTable = ({
       type: "link",
       linkUrlKey: "leadName_url",
     },
-    { key: "contact", label: "Contact", type: "text" ,width:"129px"},
-    { key: "source", label: "Source", type: "text" ,width:"129px"},
-    { key: "role", label: "Role", type: "text" , width:"129px"},
+    { key: "contact", label: "Contact", type: "text", width: "129px" },
+    { key: "source", label: "Source", type: "text", width: "129px" },
+    { key: "role", label: "Role", type: "text", width: "129px" },
     {
       key: "company",
       label: "Company",
       type: "image",
-      imageUrlKey: "company_image", width:"129px"
+      imageUrlKey: "company_image",
+      width: "129px",
     },
-    { key: "address", label: "Address", type: "text"},
+    { key: "address", label: "Address", type: "text" },
     { key: "status", label: "Status", type: "status" },
   ];
 
@@ -615,6 +616,7 @@ const LeadsTable = ({
           selectable={true}
           hidePagination={true}
           onSelect={handleSelect}
+          actionColClassName="p-1"
           bottomActions={[
             {
               label: "Add to campaign",
@@ -627,36 +629,36 @@ const LeadsTable = ({
           ]}
           showSelectionCount={true}
           actionsType="inline"
-          actions={(row: Record<string, unknown>) => (
-            <div className="flex">
+          actions={(row) => (
+            <div className="flex items-center  max-w-[200px] ">
               <button
-                className="cursor-pointer"
-                onClick={() => handleAddToCampaign([row])}
+                className="cursor-pointer "
+                onClick={() => handleAddToCampaign([row])} 
               >
                 <Image
-                  src="/images/action1.svg"
+                  src="/images/Bttn-mail.svg"
                   alt="Edit"
-                  width={40}
-                  height={40}
+                  width={50}
+                  height={50}
                 />
               </button>
-              <button className="cursor-pointer">
+              <button className="cursor-pointer   ">
                 <Image
-                  src="/images/action2.svg"
+                  src="/images/Bttn-down.svg"
                   alt="Edit"
-                  width={40}
-                  height={40}
+                  width={50}
+                  height={50}
                 />
               </button>
               <button
-                className="cursor-pointer"
+                className="cursor-pointer   "
                 onClick={() => handleDeleteLeads([row])}
               >
                 <Image
-                  src="/images/action3.svg"
-                  alt="Delete"
-                  width={40}
-                  height={40}
+                  src="/images/Bttn-delete.svg"
+                  alt="Edit"
+                  width={50}
+                  height={50}
                 />
               </button>
             </div>
