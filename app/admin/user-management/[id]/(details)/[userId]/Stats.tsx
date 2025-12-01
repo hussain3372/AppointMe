@@ -97,9 +97,9 @@ export default function Stats() {
   return (
     <div>
       <div className="hidden sm:flex  gap-1 items-center">
-        <Link className='heading-6 font-regular text-[#70747D] hover:text-blue-500 hover:underline uppercase' href='/admin/user-management'>User management</Link>
+        <Link className='heading-6 font-regular text-[#70747D]  hover:underline uppercase' href='/admin/user-management'>User management</Link>
         <Image src='/images/gap-img.svg' alt='campaigns' height={20} width={20}/>
-        <p className=" heading-6 font-regular text-[#70747D]">Floyd Miles</p>
+        <Link className=" heading-6 font-regular text-[#70747D] hover:underline uppercase" href='/admin/user-management/floyd-miles' >Floyd Miles</Link>
         <Image src='/images/gap-img.svg' alt='campaigns' height={20} width={20}/>
         <p className="  heading-6 font-sm sm:font-regular text-[#70747D]">NEW PRODUCT LAUNCH</p>
       </div>

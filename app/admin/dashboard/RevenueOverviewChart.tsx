@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import FilterDropdown from "@/app/shared/FilterDropdown";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -137,7 +138,7 @@ const RevenueOverviewChart: React.FC<RevenueOverviewChartProps> = ({
               return context[0].label;
             },
             label: function (context) {
-               return "$" + context.parsed.y + " USD";
+              return "$" + context.parsed.y + " USD";
             },
           },
         },
@@ -180,6 +181,7 @@ const RevenueOverviewChart: React.FC<RevenueOverviewChartProps> = ({
       }
     };
   }, []);
+  const [filter, setFilter] = useState<string | null>("Today");
 
   return (
     <div className={`w-full bg-[#11224E] h-full rounded-lg p-5 ${className}`}>
@@ -189,28 +191,19 @@ const RevenueOverviewChart: React.FC<RevenueOverviewChartProps> = ({
             Revenue overview
           </h1>
         </div>
-        <button className="px-4 py-2 text-sm text-white bg-white/10 rounded-lg hover:bg-white/20 transition-colors flex items-center gap-2">
-          Today
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </button>
+        <FilterDropdown
+          label="Select Range"
+          options={["Today", "Yesterday"]}
+          value={filter}
+          onChange={(v) => setFilter(v)}
+          buttonClassName="bg-[#FFFFFF1F] rounded-[100px] text-[#FFF] "
+        />
       </div>
       <div className="mt-6">
-        <h2 className="text-sm font-medium text-[#FFFFFF99] mb-1">
+        <h2 className="body-5 font-medium text-[#FFFFFF99] mb-1">
           Revenue overview
         </h2>
-        <p className="text-2xl font-medium text-white">$32,000,000 USD</p>
+        <p className="heading-3 font-medium text-white">$32,000,000 USD</p>
       </div>
       <div className="h-64">
         <canvas ref={chartRef}></canvas>

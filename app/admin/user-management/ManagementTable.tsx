@@ -20,18 +20,18 @@ const ManagementTable = ({
       type: "link",
       linkUrlKey: "leadName_url",
     },
-    { key: "contact", label: "Email", type: "text" },
-    { key: "signUp", label: "Signup date", type: "text" },
+    { key: "email", label: "Email", type: "text" },
+    { key: "signUp", label: "Signup date", type: "text"  },
     { key: "plan", label: "Plan", type: "text" },
     { key: "revenue", label: "Revenue", type: "text" },
-    { key: "status", label: "Status", type: "status" },
+    { key: "status", label: "Status", type: "status" }
   ];
 
   const peopleData = [
     {
       leadName: "Floyd Miles",
       leadName_url: "/admin/user-management/floyd-miles",
-      contact: "floyd.miles@gmail.com",
+      email: "floyd.miles@gmail.com loyd.miles@gmail.com",
       signUp: "Aug 12, 2025",
       plan : "Pro",
       revenue: "$45",
@@ -43,7 +43,7 @@ const ManagementTable = ({
       leadName: "Leslie Alexander",
       leadName_url: "/admin/user-management/floyd-miles",
 
-      contact: "leslie.alexander@outlook.com",
+      email: "leslie.alexander@outlook.com",
       signUp: "Aug 12, 2025",
       plan : "Pro",
       revenue: "$45",
@@ -55,7 +55,7 @@ const ManagementTable = ({
       leadName: "Courtney Henry",
       leadName_url: "/admin/user-management/floyd-miles",
 
-      contact: "courtney.henry@yahoo.com",
+      email: "courtney.henry@yahoo.com",
       signUp: "Aug 12, 2025",
       plan : "Pro",
       revenue: "$45",
@@ -68,7 +68,7 @@ const ManagementTable = ({
       leadName: "Wade Warren",
       leadName_url: "/admin/user-management/floyd-miles",
 
-      contact: "wade.warren@gmail.com",
+      email: "wade.warren@gmail.com",
       signUp: "Aug 12, 2025",
       plan : "Pro",
       revenue: "$45",
@@ -80,7 +80,7 @@ const ManagementTable = ({
     {
       leadName: "Jenny Wilson",
 
-      contact: "jenny.wilson@icloud.com",
+      email: "jenny.wilson@icloud.com",
       signUp: "Aug 12, 2025",
       plan : "Pro",
       revenue: "$45",

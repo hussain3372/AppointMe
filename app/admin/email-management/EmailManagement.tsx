@@ -1,9 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import PrimaryBtn from "@/app/ui/buttons/PrimaryBtn";
-import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import EmailTable from "./EmailTable";
 
 const EmailManagement = () => {

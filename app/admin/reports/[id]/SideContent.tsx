@@ -115,28 +115,28 @@ export default function SideContent() {
     return (
         <div className='pt-5 h-full flex flex-col'>
             {/* Header section - fixed height */}
-            <div className=" gap-2 items-center text-[#70747D] flex-shrink-0 px-4 hidden sm:flex">
-                <Link href="/admin/reports" className="heading-6 font-normal leading-[20px] hover:text-blue-500 uppercase hover:underline">Reports & analytics</Link>
+            <div className=" gap-2 items-center text-[#70747D] shrink-0 px-4 hidden sm:flex">
+                <Link href="/admin/reports" className="heading-6 font-normal leading-5  uppercase hover:underline">Reports & analytics</Link>
                 <Image src='/images/center-arrow.svg' alt='Arrow' height={20} width={20} />
-                <h6 className="heading-6 font-regular uppercase leading-[20px]">Floyd Miles</h6>
+                <h6 className="heading-6 font-regular uppercase leading-5">Floyd Miles</h6>
             </div>
 
             {/* Scrollable content area */}
             <div className='flex-1 overflow-y-auto hide-scrollbar'>
                 <div className='flex flex-col min-h-full'>
-                    <div className='flex flex-col items-center pt-[32px] flex-1'>
+                    <div className='flex flex-col items-center pt-8 flex-1'>
                         {/* Profile section */}
-                        <div className="flex-shrink-0">
+                        <div className="shrink-0">
                             <Image src='/images/profile-icon.png' alt='profile-image' height={100} width={100} />
                             <h4 className="heading-4 font-medium mt-4 text-center">Sarah</h4>
                             
                         </div>
 
                         {/* Icons section - Updated with dropdown */}
-                        <div className="flex gap-5 flex-shrink-0 px-4 mt-5">
-                            <div className="flex flex-col items-center gap-2">
+                        <div className="flex gap-5 shrink-0 px-4 mt-5">
+                            <div className="flex flex-col items-center gap-2 cursor-pointer">
                                 <Image src='/images/email.svg' alt='Email' height={36} width={36} />
-                                <p className='heading-7 font-normal text-[#70747D]'>Email</p>
+                                <p className='heading-7 font-normal text-[#70747D] '>Email</p>
                             </div>
                             
                             <div className="flex flex-col  items-center gap-2  relative">
@@ -149,7 +149,7 @@ export default function SideContent() {
                         </div>
 
                         {/* Last activity */}
-                        <div className="flex gap-1 pt-5 items-center flex-shrink-0">
+                        <div className="flex gap-1 pt-5 items-center shrink-0">
                             <div className="bg-[#3DDF85] h-[6px] w-[6px] rounded-full"></div>
                             <p className='heading-7 font-normal text-[#70747D]'>Last activity:</p>
                             <p className="heading-7 font-normal text-[#111827]">Aug 12, 2025</p>
@@ -185,9 +185,9 @@ export default function SideContent() {
                                     <div key={item.id} className='bg-[#FEF4ED] w-full p-3 rounded-lg flex justify-between'>
                                         <div>
                                             <p className='heading-7 font-normal text-[#70747D]'> {item.title} </p>
-                                            <p className='heading-7 font-medium text-[#111827] mt-1'> {item.value}</p>
+                                            <p className='heading-7 font-medium text-[#111827] mt-1 cursor-pointer'> {item.value}</p>
                                         </div>
-                                        <Image src={item.img} alt={item.title} width={20} height={20} />
+                                        <Image src={item.img} alt={item.title} width={20} height={20} className='cursor-pointer'/>
                                     </div>
                                 ))}
                             </div>

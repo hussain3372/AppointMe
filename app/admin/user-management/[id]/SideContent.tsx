@@ -111,7 +111,7 @@ export default function SideContent() {
         <div className='pt-5 h-full flex flex-col'>
             {/* Header section - fixed height */}
             <div className="hidden sm:flex gap-2 items-center text-[#70747D] flex-shrink-0 px-4  ">
-                <Link href="/leads" className="heading-6 font-normal leading-[20px] hover:text-blue-500 uppercase hover:underline">User management</Link>
+                <Link href="/admin/user-management" className="heading-6 font-normal leading-[20px] hover:text-blue-500 uppercase hover:underline">User management</Link>
                 <Image src='/images/center-arrow.svg' alt='Arrow' height={20} width={20} />
                 <h6 className="heading-6 font-regular uppercase leading-[20px]">Floyd Miles</h6>
             </div>
@@ -130,8 +130,8 @@ export default function SideContent() {
                         {/* Icons section - Updated with dropdown */}
                         <div className="flex gap-5 flex-shrink-0 px-4 mt-5">
                             <div className="flex flex-col items-center gap-2">
-                                <Image src='/images/email.svg' alt='Email' height={36} width={36} />
-                                <p className='heading-7 font-normal text-[#70747D]'>Email</p>
+                                <Image src='/images/email.svg' alt='Email' height={36} width={36} className='cursor-pointer'/>
+                                <p className='heading-7 font-normal text-[#70747D] cursor-pointer'>Email</p>
                             </div>
                             
                             <div className="flex flex-col  items-center gap-2  relative">
@@ -180,9 +180,9 @@ export default function SideContent() {
                                     <div key={item.id} className='bg-[#FEF4ED] w-full p-3 rounded-lg flex justify-between'>
                                         <div>
                                             <p className='heading-7 font-normal text-[#70747D]'> {item.title} </p>
-                                            <p className='heading-7 font-medium text-[#111827] mt-1'> {item.value}</p>
+                                            <p className='heading-7 font-medium text-[#111827] mt-1 cursor-pointer'> {item.value}</p>
                                         </div>
-                                        <Image src={item.img} alt={item.title} width={20} height={20} />
+                                        <Image src={item.img} alt={item.title} width={20} height={20} className='cursor-pointer'/>
                                     </div>
                                 ))}
                             </div>

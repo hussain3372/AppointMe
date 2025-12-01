@@ -10,8 +10,8 @@ const Dashboard = () => {
   return (
     <div className="space-y-5">
       <div className="space-y-2">
-        <h1 className="heading-2 text-[#111827] ">Welcome, Alex</h1>
-        <p className="heading-5 text-[#70747D]">
+        <h1 className="heading-2 text-[#111827] font-medium">Welcome, Alex</h1>
+        <p className="body-3 text-[#70747D] font-normal" >
           Monitor your outreach performance and key engagement metrics.
         </p>
       </div>

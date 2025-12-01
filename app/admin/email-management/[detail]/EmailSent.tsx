@@ -40,7 +40,7 @@ export default function EmailSent() {
 
   return (
     <div className="pt-5">
-      <div className="flex flex-col sm:flex-row justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start">
         <h4 className="heading-4 font-medium text-[#111827]">Emails sent</h4>
         
       </div>
@@ -55,10 +55,10 @@ export default function EmailSent() {
                 width={40}
               />
               <div className="space-y-0 5">
-                <h6 className=" heading-6 text-center sm:text-start font-medium text-[#111827]">
+                <h6 className=" heading-6 text-start sm:text-start font-medium text-[#111827]">
                   Conrad Fisher
                 </h6>
-                <p className="space-y-0.5 text-center sm:text-start heading-7 font-regular text-[#70747D] ">
+                <p className="space-y-0.5 text-center sm:text-start heading-7 py-1 font-regular text-[#70747D] ">
                   <span className="mr-2">To:</span> Floryd, Kim, Lisa, William,
                   John, Akshy, Varun, Steve, Mark, Umer.....
                 </p>
@@ -77,7 +77,7 @@ export default function EmailSent() {
               <ActionDropdown row={""} actions={getActions} />
             </div>
           </div>
-          <div className="mt-2 space-y-2">
+          <div className="mt-5 space-y-2">
             <div className="flex gap-3 bg-[#FFFFFF] border border-[#E2E3E5] rounded-lg p-3 items-center">
               <h6 className="heading-6 font-regular text-[#70747D] pr-3">
                 Subject

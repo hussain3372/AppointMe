@@ -10,8 +10,8 @@ export interface RegisterRequest {
 
 export interface RegisterSuccessResponse {
   error: {
-    message: string,
-  }
+    message: string;
+  };
   message: string;
   user: {
     id: string;
@@ -40,8 +40,8 @@ export interface LoginRequest {
 
 export interface LoginSuccessResponse {
   error: {
-    message: string,
-  }
+    message: string;
+  };
   message: string;
   user: {
     id: string;
@@ -83,7 +83,6 @@ export interface ResetPasswordSuccessResponse {
   message: string;
 }
 
-
 // change password
 
 export interface ChangePasswordRequest {
@@ -93,4 +92,45 @@ export interface ChangePasswordRequest {
 
 export interface ChangePasswordSuccessResponse {
   message: string;
+}
+
+// verify email
+
+export interface VerifyEmailRequest {
+  token: string;
+}
+
+export interface VerifyEmailSuccessResponse {
+  error: {
+    message: string;
+  };
+  message: string;
+  user: {
+    id: string;
+    tenantId: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    role: string;
+    status: string;
+    profile: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+  tokens: {
+    accessToken: string;
+    refreshToken: string;
+  };
+}
+
+// verify otp
+
+export interface ResetOtpRequest {
+  email: string;
+  otp: string;
+}
+
+export interface ResetOtpSuccessResponse {
+  message: string;
+  otpVerified: boolean;
 }

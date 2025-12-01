@@ -32,13 +32,11 @@ export type Column = {
 interface SharedTableProps {
   columns: Column[];
   data: Record<string, unknown>[];
-  // title?: string;
   isBorder?: boolean;
   filters?: { key: string; label: string; options: string[] }[];
   searchable?: boolean;
   filterable?: boolean;
   title?: string | React.ReactNode;
-
   selectable?: boolean;
   actions?: (row: Record<string, unknown>) => React.ReactNode;
   onSelect?: (selectedRows: Record<string, unknown>[]) => void;
@@ -139,6 +137,14 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
         return "text-[#EA3232]";
       case "failed":
         return "text-[#EA3232]";
+         case "pending":
+        return "text-[#F87B1B]";
+         case "in progress":
+        return "text-[#DF3CFF]";
+         case "resolved":
+        return "text-[#0CD767]";
+         case "open":
+        return "text-[#11224E]";
       default:
         return "text-[#11224E] ";
     }
@@ -159,7 +165,6 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
 };
 
 // Image Cell Component
-// Image Cell Component
 const ImageCell: React.FC<{
   image: string;
   text: string;
@@ -174,7 +179,7 @@ const ImageCell: React.FC<{
       {imagePosition === "left" && (
         <img src={image} alt={text} className="w-7 rounded-full h-7  " />
       )}
-      <span>{text}</span>
+      <span className="truncate">{text}</span>
       {imagePosition === "right" && (
         <img src={image} alt={text} className="w-4 h-4  " />
       )}
@@ -196,8 +201,8 @@ const SharedTable: React.FC<SharedTableProps> = ({
   onSelect,
   bottomActions,
   showSelectionCount = true,
-  hidePagination = false, // Add this with default value
-   actionColClassName, 
+  hidePagination = false,
+  actionColClassName,
 }) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [search, setSearch] = useState("");
@@ -249,28 +254,25 @@ const SharedTable: React.FC<SharedTableProps> = ({
           <ImageCell
             image={row[`${col.key}_image`]}
             text={value}
-            imagePosition={col.imagePosition} // Pass the image position
+            imagePosition={col.imagePosition}
           />
         );
       case "link":
         return (
           <a
             href={col.linkUrlKey ? row[col.linkUrlKey] : "#"}
-            className="underline flex items-center gap-2"
+            className="underline flex items-center gap-2 min-w-0"
           >
             {row[`${col.key}_image`] && (
               <img
                 src={row[`${col.key}_image`]}
                 alt={value}
-                className="w-7 h-7 rounded-full "
+                className="w-7 h-7 rounded-full flex-shrink-0"
               />
             )}
-            {value}
+            <span className="truncate">{value}</span>
           </a>
         );
-
-      // default:
-      //   return value;
       default:
         return <TruncateTooltip>{String(value)}</TruncateTooltip>;
     }
@@ -319,11 +321,11 @@ const SharedTable: React.FC<SharedTableProps> = ({
       </div>
 
       <div className="overflow-x-auto hide-scrollbar">
-        <table className="min-w-full border-collapse w-full  ">
+        <table className="min-w-full border-collapse w-full table-fixed">
           <thead>
             <tr className="bg-[#F2F2F2] rounded-lg text-left text-[12px] text-[#111827] uppercase">
               {selectable && (
-                <th className="p-4">
+                <th className="p-4 w-[50px]">
                   <CustomCheckbox
                     checked={
                       paginatedData.length > 0 &&
@@ -336,7 +338,7 @@ const SharedTable: React.FC<SharedTableProps> = ({
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  className={`p-3 heading-7 font-normal text-[#111827] truncate`}
+                  className="p-3 heading-7 font-normal text-[#111827]"
                   style={
                     col.width
                       ? {
@@ -350,7 +352,9 @@ const SharedTable: React.FC<SharedTableProps> = ({
                   {col.label}
                 </th>
               ))}
-              {actions && <th className="p-4 heading-7 font-normal">Action</th>}
+              {actions && (
+                <th className="p-4 heading-7 font-normal w-[100px]">Action</th>
+              )}
             </tr>
           </thead>
 
@@ -361,7 +365,7 @@ const SharedTable: React.FC<SharedTableProps> = ({
                 className="hover:bg-gray-50 text-[12px] font-normal text-[#414652] border-b border-gray-100"
               >
                 {selectable && (
-                  <td className="p-4">
+                  <td className="p-4 w-[50px]">
                     <CustomCheckbox
                       checked={selectedRows.includes(row)}
                       onChange={(checked) => handleSelectRow(row, checked)}
@@ -372,7 +376,7 @@ const SharedTable: React.FC<SharedTableProps> = ({
                 {columns.map((col) => (
                   <td
                     key={col.key}
-                    className="p-3 truncate"
+                    className="p-3 overflow-hidden"
                     style={
                       col.width
                         ? {
@@ -383,12 +387,12 @@ const SharedTable: React.FC<SharedTableProps> = ({
                         : {}
                     }
                   >
-                    {renderCell(row, col)}
+                    <div className="overflow-hidden">{renderCell(row, col)}</div>
                   </td>
                 ))}
 
                 {actions && (
-                  <td className={`${actionColClassName || "p-4"} relative`}>
+                  <td className={`${actionColClassName || "p-4"} w-[100px] relative`}>
                     {actionsType === "dropdown" ? (
                       <ActionDropdown actions={actions} row={row} />
                     ) : (
@@ -414,7 +418,7 @@ const SharedTable: React.FC<SharedTableProps> = ({
         <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-[#11224E] text-white rounded-sm sm:p-3 p-3 flex items-center sm:gap-3 gap-1 whitespace-nowrap z-50">
           {showSelectionCount && (
             <>
-              <span className="font-medium    sm:text-[12px] text-[10px]">
+              <span className="font-medium sm:text-[12px] text-[10px]">
                 {selectedRows.length} selected
               </span>
               <div className="w-px h-3 bg-gray-600"></div>
@@ -434,7 +438,7 @@ const SharedTable: React.FC<SharedTableProps> = ({
                   {action.label}
                 </button>
                 {i < bottomActions.length - 1 && (
-                  <div className="w-px h-3 bg-gray-600 sm:font-medium font-normal sm:text-[12px] text-[10px] "></div>
+                  <div className="w-px h-3 bg-gray-600 sm:font-medium font-normal sm:text-[12px] text-[10px]"></div>
                 )}
               </React.Fragment>
             ))}

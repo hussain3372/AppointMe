@@ -119,7 +119,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           <div className="w-full">
             {/* Logo Section */}
             <div className="flex items-center justify-between w-full">
-               <Link href="/admin/dashboard">
+              <Link href="/admin/dashboard">
                 <Image
                   src="/images/full-logo.svg"
                   width={160}
@@ -131,7 +131,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                       : "cursor-pointer"
                   }
                 />
-                </Link>
+              </Link>
               <button
                 aria-pressed={minimized}
                 aria-label={
@@ -219,7 +219,11 @@ const Sidebar: React.FC<SidebarProps> = ({
 
                 {openDropdowns.includes("essential") && (
                   <div className="flex flex-col mt-3 space-y-1">
-                    <NavLink onNavigate={onClose} href="/admin/dashboard" minimized={minimized}>
+                    <NavLink
+                      onNavigate={onClose}
+                      href="/admin/dashboard"
+                      minimized={minimized}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -301,7 +305,8 @@ const Sidebar: React.FC<SidebarProps> = ({
                       minimized ? "mt-1" : "mt-3"
                     } space-y-1`}
                   >
-                    <NavLink onNavigate={onClose}
+                    <NavLink
+                      onNavigate={onClose}
                       href="/admin/user-management"
                       minimized={minimized}
                     >
@@ -323,7 +328,8 @@ const Sidebar: React.FC<SidebarProps> = ({
                         User management
                       </span>
                     </NavLink>
-                    <NavLink onNavigate={onClose}
+                    <NavLink
+                      onNavigate={onClose}
                       href="/admin/campaign-management"
                       minimized={minimized}
                     >
@@ -345,7 +351,8 @@ const Sidebar: React.FC<SidebarProps> = ({
                         Campaign management
                       </span>
                     </NavLink>
-                    <NavLink onNavigate={onClose}
+                    <NavLink
+                      onNavigate={onClose}
                       href="/admin/email-management"
                       minimized={minimized}
                     >
@@ -367,7 +374,11 @@ const Sidebar: React.FC<SidebarProps> = ({
                         Email management
                       </span>
                     </NavLink>
-                    <NavLink onNavigate={onClose} href="/admin/reports" minimized={minimized}>
+                    <NavLink
+                      onNavigate={onClose}
+                      href="/admin/reports"
+                      minimized={minimized}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -386,7 +397,11 @@ const Sidebar: React.FC<SidebarProps> = ({
                         Reports & analytics
                       </span>
                     </NavLink>
-                    <NavLink onNavigate={onClose} href="/admin/billing" minimized={minimized}>
+                    <NavLink
+                      onNavigate={onClose}
+                      href="/admin/billing"
+                      minimized={minimized}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -413,7 +428,11 @@ const Sidebar: React.FC<SidebarProps> = ({
 
           <div className="w-full">
             <div className="flex flex-col mt-3 space-y-1">
-              <NavLink onNavigate={onClose} href="/admin/settings" minimized={minimized}>
+              <NavLink
+                onNavigate={onClose}
+                href="/admin/settings"
+                minimized={minimized}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -436,14 +455,19 @@ const Sidebar: React.FC<SidebarProps> = ({
                 </svg>
                 <span className={minimized ? "hidden" : ""}>Setting</span>
               </NavLink>
-              <button
+              <NavLink
+                onNavigate={onClose}
+                href="/admin/help-support"
+                minimized={minimized}
+              >
+                {/* <button
                 className={
                   "text-[14px] py-2 px-3 rounded-full flex items-center gap-2 text-[#111827] hover:text-[#FFFFFF] hover:bg-[#11224E] bg-transparent transition " +
                   (minimized ? "justify-center px-1" : "") +
                   (isDrawerOpen ? " bg-[#11224E]! text-[#FFFFFF]!" : "")
                 }
                 onClick={() => setIsDrawerOpen(true)}
-              >
+              > */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -461,7 +485,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <span className={minimized ? "hidden" : ""}>
                   Help & support
                 </span>
-              </button>
+              </NavLink>
               <button
                 onClick={() => setIsLogoutModalOpen(true)}
                 className={

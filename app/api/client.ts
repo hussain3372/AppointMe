@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 export interface ApiResponse<T = any> {
   success?: boolean;
   message?: string;
@@ -20,16 +22,13 @@ export interface RequestOptions {
   cache?: RequestCache;
 }
 
-
-
 let apiConfig: ApiConfig = {
   baseURL: process.env.NEXT_PUBLIC_BASE_URL || "",
   timeout: 20000,
-  getToken: () => localStorage.getItem("token"),
+  getToken: () => Cookies.get("accessToken") ?? null,
 };
 
 const DEFAULT_CONFIG = { ...apiConfig };
-
 
 async function apiRequest<T>(
   endpoint: string,
@@ -71,7 +70,6 @@ async function apiRequest<T>(
     };
   }
 }
-
 
 export const apiClient = {
   initialize(config: Partial<ApiConfig>): void {

@@ -17,31 +17,30 @@ interface Email {
 export default function Emails(): React.JSX.Element {
   const stats = [
     {
-      id : 1,
-      value : "1k",
-      title : "Emails sent",
-      img : "/images/mail-plus.svg"
+      id: 1,
+      value: "1k",
+      title: "Emails sent",
+      img: "/images/mail-plus.svg",
     },
     {
-      id : 2,
-      value : "76%",
-      title : "Open rate",
-      img : "/images/card4.svg"
+      id: 2,
+      value: "76%",
+      title: "Open rate",
+      img: "/images/card4.svg",
     },
     {
-      id : 3,
-      value : "65%",
-      title : "Reply rate",
-      img : "/images/card4.svg"
+      id: 3,
+      value: "65%",
+      title: "Reply rate",
+      img: "/images/card4.svg",
     },
     {
-      id : 4,
-      value : "40%%",
-      title : "Click rate",
-      img : "/images/card4.svg"
+      id: 4,
+      value: "40%%",
+      title: "Click rate",
+      img: "/images/card4.svg",
     },
-  ]
-
+  ];
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [emailToDelete, setEmailToDelete] = useState<Email | null>(null);
@@ -49,28 +48,28 @@ export default function Emails(): React.JSX.Element {
   // Define actions for the dropdown with proper typing
   const getActions = (row: Email): React.ReactNode => (
     <div className="p-2">
-      <button 
+      <button
         type="button"
         className="w-full cursor-pointer text-left px-2 py-1 text-sm hover:bg-gray-100 rounded transition-colors duration-200"
-        onClick={() => console.log('Reply to email', row.id)}
+        onClick={() => console.log("Reply to email", row.id)}
       >
         Reply
       </button>
-      <button 
+      <button
         type="button"
         className="w-full cursor-pointer text-left px-2 py-1 text-sm hover:bg-gray-100 rounded transition-colors duration-200"
-        onClick={() => console.log('Forward email', row.id)}
+        onClick={() => console.log("Forward email", row.id)}
       >
         Forward
       </button>
-      <button 
+      <button
         type="button"
         className="w-full cursor-pointer text-left px-2 py-1 text-sm hover:bg-gray-100 rounded transition-colors duration-200"
-        onClick={() => console.log('Archive email', row.id)}
+        onClick={() => console.log("Archive email", row.id)}
       >
         Archive
       </button>
-      <button 
+      <button
         type="button"
         className="w-full cursor-pointer text-left px-2 py-1 text-sm hover:bg-gray-100 rounded transition-colors duration-200 text-red-600"
         onClick={() => {
@@ -85,7 +84,7 @@ export default function Emails(): React.JSX.Element {
 
   const handleDeleteConfirm = () => {
     if (emailToDelete) {
-      console.log('Delete email', emailToDelete.id);
+      console.log("Delete email", emailToDelete.id);
       // Add your actual delete logic here
     }
   };
@@ -99,7 +98,8 @@ export default function Emails(): React.JSX.Element {
       time: "Yesterday 12:03am",
       img: "/images/profile-icon.png",
       subject: "Monthly newsletter",
-      content: "Thank you for your continued support of our monthly newsletter. We appreciate your engagement and feedback on our recent articles about industry trends and best practices.",
+      content:
+        "Thank you for your continued support of our monthly newsletter. We appreciate your engagement and feedback on our recent articles about industry trends and best practices.",
     },
     {
       id: 2,
@@ -109,7 +109,8 @@ export default function Emails(): React.JSX.Element {
       time: "Yesterday 12:03am",
       img: "/images/profile-icon.png",
       subject: "Monthly newsletter",
-      content: "We wanted to follow up on our previous email regarding the upcoming webinar series. Please let us know if you'd like to register for any of the sessions we have scheduled for next month.",
+      content:
+        "We wanted to follow up on our previous email regarding the upcoming webinar series. Please let us know if you'd like to register for any of the sessions we have scheduled for next month.",
     },
     {
       id: 3,
@@ -119,7 +120,8 @@ export default function Emails(): React.JSX.Element {
       time: "Today 10:15am",
       img: "/images/profile-icon.png",
       subject: "Project Update",
-      content: "The quarterly project review has been scheduled for next Tuesday at 2:00 PM. Please come prepared with your status reports and any blockers you'd like to discuss with the team.",
+      content:
+        "The quarterly project review has been scheduled for next Tuesday at 2:00 PM. Please come prepared with your status reports and any blockers you'd like to discuss with the team.",
     },
     {
       id: 4,
@@ -129,7 +131,8 @@ export default function Emails(): React.JSX.Element {
       time: "Today 9:30am",
       img: "/images/profile-icon.png",
       subject: "Meeting Follow-up",
-      content: "It was great connecting with you during our meeting yesterday. As discussed, I've attached the documents we reviewed and the action items we agreed upon. Looking forward to our next check-in.",
+      content:
+        "It was great connecting with you during our meeting yesterday. As discussed, I've attached the documents we reviewed and the action items we agreed upon. Looking forward to our next check-in.",
     },
   ];
 
@@ -145,22 +148,27 @@ export default function Emails(): React.JSX.Element {
   return (
     <div className="space-y-5 overflow-auto">
       <div className="grid sm:grid-cols-2 gap-3 lg:grid-cols-4">
-            {
-              stats.map((stat)=>(
-                <div key={stat.id} className="bg-[#F4F4F4] rounded-lg p-3 flex items-center gap-3">
-                  <div className=" flex gap-3 items-center">
-                    <div className="bg-white p-2 rounded-lg custom-shadow ">
-                    <Image width={20} height={20} src={stat.img} alt={stat.title} />
-                    </div>
-                    <div className="space-y-1">
-                      <p className="heading-4 font-normal text-[#111827]">{stat.value}</p>
-                      <p className="heading-7 font-normal text-[#70747D]">{stat.title}</p>
-                    </div>
-                  </div>
-                </div>
-              ))
-            }
-           </div>
+        {stats.map((stat) => (
+          <div
+            key={stat.id}
+            className="bg-[#F4F4F4] rounded-lg p-3 flex items-center gap-3"
+          >
+            <div className=" flex gap-3 items-center">
+              <div className="bg-white p-2 rounded-lg custom-shadow ">
+                <Image width={20} height={20} src={stat.img} alt={stat.title} />
+              </div>
+              <div className="space-y-1">
+                <p className="heading-4 font-normal text-[#111827]">
+                  {stat.value}
+                </p>
+                <p className="heading-7 font-normal text-[#70747D]">
+                  {stat.title}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
 
       {Object.entries(groupedEmails).map(([date, dateEmails]) => (
         <div key={date} className="space-y-3">
@@ -171,13 +179,16 @@ export default function Emails(): React.JSX.Element {
 
           {/* Emails for this date */}
           {dateEmails.map((email) => (
-            <div key={email.id} className="bg-[#F6F6F6] rounded-lg border border-[#ECEDEE] p-3">
+            <div
+              key={email.id}
+              className="bg-[#F6F6F6] rounded-lg border border-[#ECEDEE] p-3"
+            >
               <div className="flex justify-between">
                 <div className="flex gap-3 items-center">
-                  <Image 
-                    src={email.img || "/images/profile-icon.png"} 
-                    alt={email.sender} 
-                    height={40} 
+                  <Image
+                    src={email.img || "/images/profile-icon.png"}
+                    alt={email.sender}
+                    height={40}
                     width={40}
                     className="rounded"
                   />
@@ -192,27 +203,27 @@ export default function Emails(): React.JSX.Element {
                 </div>
                 <div className="flex gap-5 items-center">
                   <div className="flex gap-2 items-center">
-                    <Image 
-                      src="/images/calendar.svg" 
-                      alt="Calendar" 
-                      height={16} 
-                      width={16} 
+                    <Image
+                      src="/images/calendar.svg"
+                      alt="Calendar"
+                      height={16}
+                      width={16}
                     />
-                    <p className="heading-7 text-[#70747D] font-regular">{email.time}</p>
+                    <p className="heading-7 text-[#70747D] font-regular">
+                      {email.time}
+                    </p>
                   </div>
-                  {/* Replaced menu icon with ActionDropdown */}
-                  <ActionDropdown 
-                    row={email} 
-                    actions={getActions} 
-                  />
+                  <ActionDropdown row={email} actions={getActions} />
                 </div>
               </div>
-              
-              <div className="bg-white shadow-[0_4px_8px_0_rgba(0,0,0,0.08)] rounded-lg flex gap-[92px] mt-3 p-3">
+
+              <div className="bg-white shadow-[0_4px_8px_0_rgba(0,0,0,0.08)] rounded-lg flex gap-12 mt-3 p-3">
                 <p className="heading-6 text-[#70747D] font-regular">Subject</p>
-                <p className="heading-6 text-[#111827] font-regular">{email.subject}</p>
+                <p className="heading-6 text-[#111827] font-regular">
+                  {email.subject}
+                </p>
               </div>
-              
+
               <div className="mt-2 heading-7 text-[#70747D] p-3 bg-white shadow-[0_4px_8px_0_rgba(0,0,0,0.08)] rounded-lg">
                 <p>{email.content}</p>
               </div>
@@ -233,7 +244,7 @@ export default function Emails(): React.JSX.Element {
         message="Are you sure you want to delete this email? This action cannot be undone."
         confirmText="Delete"
         cancelText="Cancel"
-        icon="/images/delete.png" 
+        icon="/images/delete.png"
       />
     </div>
   );

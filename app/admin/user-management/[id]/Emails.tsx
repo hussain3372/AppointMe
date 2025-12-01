@@ -208,7 +208,7 @@ export default function Emails(): React.JSX.Element {
                 </div>
               </div>
               
-              <div className="bg-white shadow-[0_4px_8px_0_rgba(0,0,0,0.08)] rounded-lg flex gap-[92px] mt-3 p-3">
+              <div className="bg-white shadow-[0_4px_8px_0_rgba(0,0,0,0.08)] rounded-lg flex gap-[45px] mt-3 p-3">
                 <p className="heading-6 text-[#70747D] font-regular">Subject</p>
                 <p className="heading-6 text-[#111827] font-regular">{email.subject}</p>
               </div>

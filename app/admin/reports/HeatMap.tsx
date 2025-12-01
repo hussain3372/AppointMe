@@ -48,7 +48,7 @@ const HeatMap = () => {
     Yearly: 9200,
   };
 
-  const rows = 19;
+  const rows = 33
   const desiredCols = 46;
   const dotWidth = 10;
   const dotHeight = 6;

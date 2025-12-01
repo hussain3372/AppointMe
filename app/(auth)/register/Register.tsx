@@ -95,8 +95,8 @@ const Register: React.FC = () => {
         return;
       }
 
-      if (data?.user) {
-        toast.success("Account created successfully!");
+      if (data) {
+        toast.success(data.message);
 
         // ✅ Save token in cookies (7 days expiry)
         Cookies.set("accessToken", data.tokens.accessToken, {
@@ -108,7 +108,6 @@ const Register: React.FC = () => {
       }
     } catch (error: any) {
       console.log("error", error);
-      toast.error(error.message || "Something went wrong.");
     }
 
     setLoading(false);

@@ -214,11 +214,11 @@ const People = () => {
     <div className="relative ">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between">
-        <div className="space-y-2">
+        <div className="space-y-1">
           <h1 className="heading-4 text-[#111827] font-medium">
             People dashboard
           </h1>
-          <p className="heading-5 font-normal text-[#70747D]">
+          <p className="heading-5 font-normal text-[#70747D] pb-5">
             Get a clear snapshot of your lead performance and activity.
           </p>
         </div>

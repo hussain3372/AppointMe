@@ -7,6 +7,7 @@ interface FilterDropdownProps {
   options: string[];
   value: string | null;
   onChange: (value: string) => void;
+  buttonClassName?: string;
 }
 
 const FilterDropdown: React.FC<FilterDropdownProps> = ({
@@ -14,6 +15,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
   options,
   value,
   onChange,
+  buttonClassName,
 }) => {
   const [open, setOpen] = useState(false);
   const [alignRight, setAlignRight] = useState(false);
@@ -25,11 +27,11 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
     if (open && buttonRef.current) {
       const buttonRect = buttonRef.current.getBoundingClientRect();
       const viewportWidth = window.innerWidth;
-      
+
       // Check if dropdown would overflow on the right
       const dropdownWidth = 190;
       const spaceOnRight = viewportWidth - buttonRect.left;
-      
+
       // If not enough space on right, align to right edge
       setAlignRight(spaceOnRight < dropdownWidth);
     }
@@ -54,7 +56,10 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
       <button
         ref={buttonRef}
         onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center justify-between gap-2 p-2 rounded-lg bg-[#F6F6F6] text-[#70747D] text-[12px] font-normal hover:bg-[#e2dddd] focus:outline-none focus:ring-2 focus:ring-orange-500"
+        className={`flex items-center justify-between gap-2 p-2 text-[12px] font-normal
+    bg-[#F6F6F6] text-[#70747D]
+    hover:bg-[#e2dddd] focus:outline-none focus:ring-2 focus:ring-orange-500
+    ${buttonClassName ?? "rounded-lg"}`}
       >
         <span>{value || label}</span>
         <ChevronDown
@@ -66,9 +71,11 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
       </button>
 
       {open && (
-        <div className={`absolute top-full mt-2 w-[180px] rounded-xl bg-white border border-gray-200 shadow-lg z-50 ${
-          alignRight ? 'right-0' : 'left-0'
-        }`}>
+        <div
+          className={`absolute top-full mt-2 w-[180px] rounded-xl bg-white border border-gray-200 shadow-lg z-50 ${
+            alignRight ? "right-0" : "left-0"
+          }`}
+        >
           <ul className="max-h-56 overflow-y-auto">
             {options.map((opt) => (
               <li

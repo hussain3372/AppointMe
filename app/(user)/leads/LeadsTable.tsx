@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SharedTable, { Column } from "@/app/shared/SharedTable";
 import ConfirmationModal from "@/app/shared/ConfirmationModal";
 // import ActionDropdown from "../shared/ActionDropdown";
 import Image from "next/image";
+import { leadsApi } from "@/app/api/leads";
 
 const LeadsTable = ({
   setIsDrawerOpen,
@@ -11,6 +12,16 @@ const LeadsTable = ({
 }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedLeadsToDelete, setSelectedLeadsToDelete] = useState<any[]>([]);
+  const [leadsData, setLeadsData] = useState("");
+
+  const fetchLeads = async () => {
+    const data = await leadsApi.getLeads();
+    console.log(data);
+  };
+
+  useEffect(() => {
+    fetchLeads();
+  });
 
   // Define columns with explicit Column[] type
   const columns: Column[] = [
@@ -19,13 +30,12 @@ const LeadsTable = ({
       label: "Lead name",
       type: "link",
       linkUrlKey: "leadName_url",
-      width: "150px",
     },
-    { key: "contact", label: "Contact", type: "text", width: "130px" },
-    { key: "source", label: "Source", type: "text", width: "119px" },
+    { key: "contact", label: "Contact", type: "text" },
+    { key: "source", label: "Source", type: "text" },
     { key: "role", label: "Role", type: "text" },
-    { key: "company", label: "Company", type: "image", width: "130px" },
-    { key: "address", label: "Address", type: "text", width: "130px" },
+    { key: "company", label: "Company", type: "image" },
+    { key: "address", label: "Address", type: "text" },
     { key: "status", label: "Status", type: "status" },
   ];
 
@@ -455,7 +465,7 @@ const LeadsTable = ({
           filterable={true}
           selectable={true}
           onSelect={handleSelect}
-          actionColClassName="p-1" 
+          actionColClassName="p-1"
           bottomActions={[
             {
               label: "Add to campaign",

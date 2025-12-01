@@ -164,7 +164,7 @@ const contentVariants = {
                 strokeLinejoin="round"
               />
             </svg>
-           z {currentRoute}
+            {currentRoute}
           </div>
 
           {/* Mobile */}
